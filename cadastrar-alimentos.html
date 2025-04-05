@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastrar Alimentos | Feed the Future BR</title>
+    <meta name="description" content="Cadastre alimentos para doação na plataforma Feed the Future BR." />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+      .form-section {
+        padding: 4rem 0;
+        background-color: #f9f9f9;
+      }
+      
+      .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+      }
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+      
+      .form-full-width {
+        grid-column: 1 / -1;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+      
+      .form-group input,
+      .form-group textarea,
+      .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 1rem;
+      }
+      
+      .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      
+      .form-section .btn-primary {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .donation-preview {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #f5f5f5;
+      }
+      
+      .donation-preview h3 {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 0.5rem;
+      }
+      
+      .preview-item {
+        margin-bottom: 0.5rem;
+      }
+      
+      .preview-label {
+        font-weight: 500;
+      }
+      
+      .impact-info {
+        margin-top: 1.5rem;
+        background-color: #e8f5e9;
+        padding: 1rem;
+        border-radius: 8px;
+        border-left: 4px solid #4CAF50;
+      }
+      
+      .impact-title {
+        color: #2E7D32;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      .impact-stats {
+        display: flex;
+        gap: 1.5rem;
+      }
+      
+      .impact-stat {
+        display: flex;
+        align-items: center;
+      }
+      
+      .impact-stat i {
+        color: #4CAF50;
+        margin-right: 0.5rem;
+        font-size: 1.25rem;
+      }
+      
+      @media (max-width: 768px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header id="header">
+      <div class="container">
+        <div class="logo">
+          <i class="fas fa-seedling"></i>
+          <h1>Feed the Future BR</h1>
+        </div>
+        <nav id="nav">
+          <button class="menu-toggle" id="menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <ul id="menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="index.html#como-funciona">Como Funciona</a></li>
+            <li><a href="index.html#impacto">Impacto</a></li>
+            <li><a href="doacoes.html">Doações</a></li>
+            <li><a href="cadastrar-alimentos.html" class="active">Cadastrar Alimentos</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+            <li><a href="#" class="btn-login" id="loginBtn">Login</a></li>
+            <li><a href="#" class="btn-register" id="registerBtn">Cadastre-se</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Form Section -->
+    <section class="form-section">
+      <div class="container">
+        <h2 class="section-title">Cadastrar Alimentos para Doação</h2>
+        <p class="section-description">Preencha o formulário abaixo para cadastrar os alimentos que você deseja doar.</p>
+        
+        <div class="form-container">
+          <form id="donationForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="title">Título da Doação*</label>
+                <input type="text" id="title" name="title" required placeholder="Ex: Frutas e vegetais frescos">
+              </div>
+              
+              <div class="form-group">
+                <label for="category">Categoria*</label>
+                <select id="category" name="category" required>
+                  <option value="">Selecione...</option>
+                  <option value="prepared">Alimentos Preparados</option>
+                  <option value="produce">Frutas e Vegetais</option>
+                  <option value="bakery">Padaria e Confeitaria</option>
+                  <option value="canned">Alimentos Enlatados</option>
+                  <option value="dairy">Laticínios</option>
+                  <option value="meat">Carnes</option>
+                  <option value="grain">Grãos e Cereais</option>
+                  <option value="other">Outros</option>
+                </select>
+              </div>
+              
+              <div class="form-group form-full-width">
+                <label for="description">Descrição*</label>
+                <textarea id="description" name="description" required placeholder="Descreva em detalhes os alimentos que você está doando..."></textarea>
+              </div>
+              
+              <div class="form-group">
+                <label for="quantity">Quantidade*</label>
+                <input type="number" id="quantity" name="quantity" min="0.1" step="0.1" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="unit">Unidade*</label>
+                <select id="unit" name="unit" required>
+                  <option value="">Selecione...</option>
+                  <option value="kg">Quilogramas (kg)</option>
+                  <option value="g">Gramas (g)</option>
+                  <option value="l">Litros (L)</option>
+                  <option value="ml">Mililitros (mL)</option>
+                  <option value="units">Unidades</option>
+                  <option value="boxes">Caixas</option>
+                  <option value="portions">Porções</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="expirationDate">Data de Validade*</label>
+                <input type="date" id="expirationDate" name="expirationDate" required>
+              </div>
+              
+              <div class="form-group">
+                <label for="deliveryType">Tipo de Entrega*</label>
+                <select id="deliveryType" name="deliveryType" required>
+                  <option value="">Selecione...</option>
+                  <option value="pickup">Retirada no Local</option>
+                  <option value="delivery">Entrega</option>
+                </select>
+              </div>
+              
+              <div class="form-group form-full-width">
+                <label for="pickupAddress">Endereço para Retirada/Entrega*</label>
+                <input type="text" id="pickupAddress" name="pickupAddress" required placeholder="Endereço completo">
+              </div>
+              
+              <input type="hidden" id="pickupLatitude" name="pickupLatitude" value="-23.550520">
+              <input type="hidden" id="pickupLongitude" name="pickupLongitude" value="-46.633308">
+            </div>
+            
+            <div class="donation-preview" id="donationPreview" style="display: none;">
+              <h3>Pré-visualização da Doação</h3>
+              <div class="preview-content"></div>
+              
+              <div class="impact-info">
+                <div class="impact-title">Impacto Ambiental Estimado:</div>
+                <div class="impact-stats">
+                  <div class="impact-stat">
+                    <i class="fas fa-cloud"></i>
+                    <span id="co2Impact">0 kg CO2 economizados</span>
+                  </div>
+                  <div class="impact-stat">
+                    <i class="fas fa-tint"></i>
+                    <span id="waterImpact">0 L de água economizados</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 1.5rem;">
+              <button type="submit" class="btn btn-primary">Cadastrar Doação</button>
+              <button type="button" class="btn btn-secondary" id="previewBtn">Pré-visualizar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-logo">
+            <h2><i class="fas fa-seedling"></i> Feed the Future BR</h2>
+            <p>Conectando estabelecimentos comerciais a ONGs para reduzir o desperdício de alimentos e ajudar comunidades vulneráveis.</p>
+          </div>
+          <div class="footer-links">
+            <h3>Links Rápidos</h3>
+            <ul>
+              <li><a href="index.html">Início</a></li>
+              <li><a href="index.html#como-funciona">Como Funciona</a></li>
+              <li><a href="index.html#impacto">Impacto</a></li>
+              <li><a href="doacoes.html">Doações</a></li>
+              <li><a href="cadastrar-alimentos.html">Cadastrar Alimentos</a></li>
+              <li><a href="index.html#contato">Contato</a></li>
+            </ul>
+          </div>
+          <div class="footer-links">
+            <h3>Legal</h3>
+            <ul>
+              <li><a href="#">Termos de Uso</a></li>
+              <li><a href="#">Política de Privacidade</a></li>
+            </ul>
+          </div>
+          <div class="footer-newsletter">
+            <h3>Newsletter</h3>
+            <p>Assine nossa newsletter para receber novidades e atualizações.</p>
+            <form id="newsletterForm">
+              <input type="email" placeholder="Seu email" required>
+              <button type="submit" class="btn btn-primary">Assinar</button>
+            </form>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Feed the Future BR. Todos os direitos reservados.</p>
+        </div>
+      </div>
+    </footer>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+      <div class="toast-content">
+        <i class="fas fa-check-circle"></i>
+        <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
+      </div>
+      <div class="toast-progress"></div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeLoginModal">&times;</span>
+        <h2>Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input type="email" id="loginEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Senha</label>
+            <input type="password" id="loginPassword" name="password" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+        <div class="form-link">
+          <p>Não tem uma conta? <a href="#" id="showRegisterModal">Cadastre-se</a></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeRegisterModal">&times;</span>
+        <h2>Cadastro</h2>
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="regName">Nome</label>
+            <input type="text" id="regName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label for="regPhone">Telefone</label>
+            <input type="tel" id="regPhone" name="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="regAddress">Endereço</label>
+            <input type="text" id="regAddress" name="address" required>
+          </div>
+          <div class="form-group">
+            <label for="regType">Tipo de Cadastro</label>
+            <select id="regType" name="type" required>
+              <option value="">Selecione...</option>
+              <option value="business">Estabelecimento</option>
+              <option value="ngo">ONG</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="regDocumentNumber">CPF/CNPJ</label>
+            <input type="text" id="regDocumentNumber" name="documentNumber" required>
+          </div>
+          <div class="form-group business-field" style="display: none;">
+            <label for="businessType">Tipo de Estabelecimento</label>
+            <select id="businessType" name="businessType">
+              <option value="">Selecione...</option>
+              <option value="restaurant">Restaurante</option>
+              <option value="supermarket">Supermercado</option>
+              <option value="bakery">Padaria</option>
+              <option value="other">Outro</option>
+            </select>
+          </div>
+          <div class="form-group ngo-field" style="display: none;">
+            <label for="ngoType">Tipo de ONG</label>
+            <select id="ngoType" name="ngoType">
+              <option value="">Selecione...</option>
+              <option value="foodBank">Banco de Alimentos</option>
+              <option value="shelter">Abrigo</option>
+              <option value="communityKitchen">Cozinha Comunitária</option>
+              <option value="other">Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Senha</label>
+            <input type="password" id="regPassword" name="password" required>
+          </div>
+          <div class="form-group">
+            <label for="regConfirmPassword">Confirmar Senha</label>
+            <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+        <div class="form-link">
+          <p>Já tem uma conta? <a href="#" id="showLoginModal">Faça login</a></p>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/donations.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Set min date for expiration date to today
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        document.getElementById('expirationDate').setAttribute('min', formattedDate);
+
+        
+        /*
+        // Check if user is logged in
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser || currentUser.type !== 'business') {
+          // Create login message
+          const formContainer = document.querySelector('.form-container');
+          formContainer.innerHTML = `
+            <div style="text-align: center; padding: 2rem;">
+              <i class="fas fa-lock" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
+              <h3>Acesso restrito</h3>
+              <p>Apenas estabelecimentos cadastrados podem doar alimentos.</p>
+              <div style="margin-top: 1.5rem;">
+                <button class="btn btn-primary" id="loginRedirect">Fazer Login</button>
+                <button class="btn btn-secondary" id="registerRedirect">Cadastrar-se</button>
+              </div>
+            </div>
+          `;
+          
+          // Add event listeners to buttons
+          document.getElementById('loginRedirect').addEventListener('click', function() {
+            document.getElementById('loginModal').style.display = 'block';
+          });
+          
+          document.getElementById('registerRedirect').addEventListener('click', function() {
+            document.getElementById('registerModal').style.display = 'block';
+          });
+          
+          return;
+        }
+        */
+
+
+        // Preview button functionality
+        const previewBtn = document.getElementById('previewBtn');
+        const donationPreview = document.getElementById('donationPreview');
+        
+        previewBtn.addEventListener('click', function() {
+          const formData = getFormData();
+          
+          if (!validateForm()) {
+            document.getElementById('toastMessage').textContent = 'Por favor, preencha todos os campos obrigatórios.';
+            document.getElementById('toast').classList.add('show');
+            setTimeout(() => {
+              document.getElementById('toast').classList.remove('show');
+            }, 3000);
+            return;
+          }
+          
+          // Show preview
+          const previewContent = donationPreview.querySelector('.preview-content');
+          const expirationDate = new Date(formData.expirationDate);
+          
+          previewContent.innerHTML = `
+            <div class="preview-item"><span class="preview-label">Título:</span> ${formData.title}</div>
+            <div class="preview-item"><span class="preview-label">Descrição:</span> ${formData.description}</div>
+            <div class="preview-item"><span class="preview-label">Categoria:</span> ${getCategoryName(formData.category)}</div>
+            <div class="preview-item"><span class="preview-label">Quantidade:</span> ${formData.quantity} ${formData.unit}</div>
+            <div class="preview-item"><span class="preview-label">Data de Validade:</span> ${expirationDate.toLocaleDateString('pt-BR')}</div>
+            <div class="preview-item"><span class="preview-label">Tipo de Entrega:</span> ${formData.deliveryType === 'pickup' ? 'Retirada no Local' : 'Entrega'}</div>
+            <div class="preview-item"><span class="preview-label">Endereço:</span> ${formData.pickupAddress}</div>
+          `;
+          
+          // Calculate environmental impact
+          const impact = calculateEnvironmentalImpact(formData.quantity);
+          document.getElementById('co2Impact').textContent = `${impact.co2Saved.toFixed(1)} kg de CO2 economizados`;
+          document.getElementById('waterImpact').textContent = `${impact.waterSaved.toFixed(0)} L de água economizados`;
+          
+          // Show preview section
+          donationPreview.style.display = 'block';
+        });
+        
+        // Form submission
+        const donationForm = document.getElementById('donationForm');
+        
+        donationForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          if (!validateForm()) {
+            document.getElementById('toastMessage').textContent = 'Por favor, preencha todos os campos obrigatórios.';
+            document.getElementById('toast').classList.add('show');
+            setTimeout(() => {
+              document.getElementById('toast').classList.remove('show');
+            }, 3000);
+            return;
+          }
+          
+          const formData = getFormData();
+          
+          // Create donation object
+          const donation = {
+            id: generateUUID(),
+            businessId: currentUser.id,
+            title: formData.title,
+            description: formData.description,
+            category: formData.category,
+            quantity: parseFloat(formData.quantity),
+            unit: formData.unit,
+            expirationDate: new Date(formData.expirationDate),
+            pickupAddress: formData.pickupAddress,
+            pickupLatitude: parseFloat(formData.pickupLatitude),
+            pickupLongitude: parseFloat(formData.pickupLongitude),
+            deliveryType: formData.deliveryType,
+            status: 'available',
+            createdAt: new Date()
+          };
+          
+          // Save donation
+          let donations = JSON.parse(localStorage.getItem('donations')) || [];
+          donations.push(donation);
+          localStorage.setItem('donations', JSON.stringify(donations));
+          
+          // Calculate and save environmental impact
+          const impact = calculateEnvironmentalImpact(donation.quantity);
+          let impacts = JSON.parse(localStorage.getItem('environmentalImpacts')) || [];
+          impacts.push({
+            id: generateUUID(),
+            donationId: donation.id,
+            co2Saved: impact.co2Saved,
+            waterSaved: impact.waterSaved,
+            createdAt: new Date()
+          });
+          localStorage.setItem('environmentalImpacts', JSON.stringify(impacts));
+          
+          // Show success message
+          document.getElementById('toastMessage').textContent = 'Doação cadastrada com sucesso!';
+          document.getElementById('toast').classList.add('show');
+          
+          // Reset form and hide preview
+          donationForm.reset();
+          donationPreview.style.display = 'none';
+          
+          // Redirect to donations page after 3 seconds
+          setTimeout(() => {
+            document.getElementById('toast').classList.remove('show');
+            window.location.href = 'doacoes.html';
+          }, 3000);
+        });
+        
+        // Helper functions
+        function getFormData() {
+          return {
+            title: document.getElementById('title').value,
+            description: document.getElementById('description').value,
+            category: document.getElementById('category').value,
+            quantity: document.getElementById('quantity').value,
+            unit: document.getElementById('unit').value,
+            expirationDate: document.getElementById('expirationDate').value,
+            deliveryType: document.getElementById('deliveryType').value,
+            pickupAddress: document.getElementById('pickupAddress').value,
+            pickupLatitude: document.getElementById('pickupLatitude').value,
+            pickupLongitude: document.getElementById('pickupLongitude').value
+          };
+        }
+        
+        function validateForm() {
+          const requiredFields = [
+            'title', 'description', 'category', 'quantity', 
+            'unit', 'expirationDate', 'deliveryType', 'pickupAddress'
+          ];
+          
+          for (let field of requiredFields) {
+            const element = document.getElementById(field);
+            if (!element.value) {
+              element.focus();
+              return false;
+            }
+          }
+          
+          return true;
+        }
+        
+        function calculateEnvironmentalImpact(quantity) {
+          // Simple calculation - in a real app this would be more sophisticated
+          // based on food type, distance, etc.
+          const co2PerKg = 2.5; // kg of CO2 saved per kg of food not wasted
+          const waterPerKg = 1000; // liters of water saved per kg of food not wasted
+          
+          // Convert to kg if necessary
+          let quantityInKg = parseFloat(quantity);
+          const unit = document.getElementById('unit').value;
+          
+          if (unit === 'g') {
+            quantityInKg = quantityInKg / 1000;
+          }
+          
+          return {
+            co2Saved: quantityInKg * co2PerKg,
+            waterSaved: quantityInKg * waterPerKg
+          };
+        }
+        
+        function getCategoryName(category) {
+          const categories = {
+            'prepared': 'Alimentos Preparados',
+            'produce': 'Frutas e Vegetais',
+            'bakery': 'Padaria e Confeitaria',
+            'canned': 'Alimentos Enlatados',
+            'dairy': 'Laticínios',
+            'meat': 'Carnes',
+            'grain': 'Grãos e Cereais',
+            'other': 'Outros'
+          };
+          
+          return categories[category] || category;
+        }
+        
+        function generateUUID() {
+          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+              const r = Math.random() * 16 | 0;
+              const v = c === 'x' ? r : (r & 0x3 | 0x8);
+              return v.toString(16);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
