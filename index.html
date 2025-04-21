@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -7,17 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Feed the Future BR - Conectando doações de alimentos</title>
     <meta name="description" content="Plataforma para conectar estabelecimentos comerciais a ONGs para reduzir o desperdício de alimentos e ajudar comunidades vulneráveis." />
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+     
+    </style>
   </head>
   <body>
-    <!-- Header -->
+    <!-- Cabeçalho -->
     <header id="header">
       <div class="container">
         <div class="logo">
@@ -25,8 +24,8 @@
           <h1>Feed the Future BR</h1>
         </div>
         <nav id="nav">
-          <button class="menu-toggle" id="menu-toggle">
-            <i class="fas fa-bars"></i>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu de navegação">
+            <i class="fas fa-bars" aria-hidden="true"></i>
           </button>
           <ul id="menu">
             <li><a href="#hero" class="active">Início</a></li>
@@ -42,7 +41,7 @@
       </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Seção de Doação -->
     <section id="hero" class="hero">
       <div class="container">
         <div class="hero-content">
@@ -54,12 +53,12 @@
           </div>
         </div>
         <div class="hero-image">
-          <img src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Doação de alimentos">
+          <img src="https://images.unsplash.com/photo-1593113646773-028c64a8f1b8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Doação de alimentos" loading="lazy">
         </div>
       </div>
     </section>
 
-    <!-- Stats Section -->
+    <!-- Seção de Status -->
     <section class="stats">
       <div class="container">
         <div class="stat-item">
@@ -80,7 +79,7 @@
       </div>
     </section>
 
-    <!-- How it works section -->
+    <!-- Seção de Como funciona -->
     <section id="como-funciona" class="how-it-works">
       <div class="container">
         <h2 class="section-title">Como Funciona</h2>
@@ -122,14 +121,14 @@
       </div>
     </section>
 
-    <!-- Impact Section -->
+    <!--  Seção de Impacto -->
     <section id="impacto" class="impact">
       <div class="container">
         <h2 class="section-title">Nosso Impacto</h2>
         <p class="section-description">Ajudamos a reduzir o desperdício de alimentos e a combater a fome, gerando impacto positivo no meio ambiente e na sociedade.</p>
         <div class="impact-content">
           <div class="impact-image">
-            <img src="https://images.unsplash.com/photo-1615397349754-cfa2066a298e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Impacto ambiental">
+            <img src="https://images.unsplash.com/photo-1615397349754-cfa2066a298e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Impacto ambiental" loading="lazy">
           </div>
           <div class="impact-text">
             <h3>Impacto Ambiental</h3>
@@ -145,13 +144,13 @@
       </div>
     </section>
 
-    <!-- Map Section -->
+    <!--  Seção do Mapa de Geolocalização -->
     <section id="mapa" class="map-section">
       <div class="container">
         <h2 class="section-title">Mapa de Doações</h2>
         <p class="section-description">Veja onde estão as doações disponíveis em sua região.</p>
         <div id="map">
-          <!-- Map will be loaded here by JavaScript -->
+          <!-- Talvez Implementar depois se tiver tempo -->
         </div>
         <div class="text-center" style="margin-top: 2rem;">
           <a href="doacoes.html" class="btn btn-primary">Ver Todas as Doações</a>
@@ -159,7 +158,7 @@
       </div>
     </section>
 
-    <!-- Contact Section -->
+    <!-- Seção de Contato -->
     <section id="contato" class="contact">
       <div class="container">
         <h2 class="section-title">Entre em Contato</h2>
@@ -170,14 +169,17 @@
               <div class="form-group">
                 <label for="name">Nome</label>
                 <input type="text" id="name" name="name" required>
+                <span class="error-message">Por favor, insira seu nome</span>
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
+                <span class="error-message">Por favor, insira um email válido</span>
               </div>
               <div class="form-group">
                 <label for="message">Mensagem</label>
                 <textarea id="message" name="message" rows="5" required></textarea>
+                <span class="error-message">Por favor, insira sua mensagem</span>
               </div>
               <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
             </form>
@@ -188,10 +190,10 @@
             <p><i class="fas fa-envelope"></i> contato@feedthefuturebr.com.br</p>
             <p><i class="fas fa-phone"></i> +55 11 9999-9999</p>
             <div class="social-media">
-              <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="#"><i class="fab fa-twitter"></i></a>
-              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+              <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             </div>
           </div>
         </div>
@@ -229,6 +231,7 @@
             <p>Assine nossa newsletter para receber novidades e atualizações.</p>
             <form id="newsletterForm">
               <input type="email" placeholder="Seu email" required>
+              <span class="error-message">Por favor, insira um email válido</span>
               <button type="submit" class="btn btn-primary">Assinar</button>
             </form>
           </div>
@@ -239,7 +242,7 @@
       </div>
     </footer>
 
-    <!-- Login Modal -->
+    <!--  Modal de Login -->
     <div id="loginModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeLoginModal">&times;</span>
@@ -248,10 +251,12 @@
           <div class="form-group">
             <label for="loginEmail">Email</label>
             <input type="email" id="loginEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
           </div>
           <div class="form-group">
             <label for="loginPassword">Senha</label>
             <input type="password" id="loginPassword" name="password" required>
+            <span class="error-message">Por favor, insira sua senha</span>
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
@@ -261,68 +266,85 @@
       </div>
     </div>
 
-    <!-- Register Modal -->
+    <!--  Modal de Cadastro -->
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeRegisterModal">&times;</span>
         <h2>Cadastro</h2>
         <form id="registerForm">
           <div class="form-group">
-            <label for="regName">Nome</label>
-            <input type="text" id="regName" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="regPhone">Telefone</label>
-            <input type="tel" id="regPhone" name="phone" required>
-          </div>
-          <div class="form-group">
-            <label for="regAddress">Endereço</label>
-            <input type="text" id="regAddress" name="address" required>
-          </div>
-          <div class="form-group">
             <label for="regType">Tipo de Cadastro</label>
             <select id="regType" name="type" required>
               <option value="">Selecione...</option>
-              <option value="business">Estabelecimento</option>
+              <option value="business">Doador/Receptor</option>
               <option value="ngo">ONG</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regName">Nome / Razão Social</label>
+            <input type="text" id="regName" name="name" required>
+            <span class="error-message">Por favor, insira seu nome</span>
+          </div>
+          
           <div class="form-group">
             <label for="regDocumentNumber">CPF/CNPJ</label>
-            <input type="text" id="regDocumentNumber" name="documentNumber" required>
+            <input type="text" id="regDocumentNumber" name="documentNumber" 
+                   pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})" 
+                   title="Digite um CPF (000.000.000-00) ou CNPJ (00.000.000/0000-00) válido" required>
+            <span class="error-message">Por favor, insira um CPF ou CNPJ válido</span>
+            <span class="document-hint" id="documentHint"></span>
           </div>
-          <div class="form-group business-field" style="display: none;">
-            <label for="businessType">Tipo de Estabelecimento</label>
-            <select id="businessType" name="businessType">
-              <option value="">Selecione...</option>
-              <option value="restaurant">Restaurante</option>
-              <option value="supermarket">Supermercado</option>
-              <option value="bakery">Padaria</option>
-              <option value="other">Outro</option>
-            </select>
-          </div>
+          
           <div class="form-group ngo-field" style="display: none;">
             <label for="ngoType">Tipo de ONG</label>
-            <select id="ngoType" name="ngoType">
+            <select id="ngoType" name="ngoType" required>
               <option value="">Selecione...</option>
               <option value="foodBank">Banco de Alimentos</option>
               <option value="shelter">Abrigo</option>
               <option value="communityKitchen">Cozinha Comunitária</option>
               <option value="other">Outro</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regPhone">Telefone</label>
+            <input type="tel" id="regPhone" name="phone" 
+                   pattern="\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}" 
+                   title="Digite um telefone válido (DDD) + número" required>
+            <span class="error-message">Por favor, insira um telefone válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regAddress">Endereço</label>
+            <input type="text" id="regAddress" name="address" required>
+            <span class="error-message">Por favor, insira seu endereço</span>
+          </div>
+          
           <div class="form-group">
             <label for="regPassword">Senha</label>
-            <input type="password" id="regPassword" name="password" required>
+            <input type="password" id="regPassword" name="password" 
+                   minlength="8" 
+                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" 
+                   title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número" 
+                   required>
+            <span class="error-message">A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas e números</span>
           </div>
+          
           <div class="form-group">
             <label for="regConfirmPassword">Confirmar Senha</label>
             <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+            <span class="password-mismatch" id="passwordMismatch">As senhas não coincidem</span>
           </div>
+          
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
         <div class="form-link">
@@ -331,7 +353,7 @@
       </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Notificação de Operação -->
     <div id="toast" class="toast">
       <div class="toast-content">
         <i class="fas fa-check-circle"></i>

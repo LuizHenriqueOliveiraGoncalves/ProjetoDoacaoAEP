@@ -1,55 +1,20 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Map functionality
+    // Funcionalidades do mapa
     const mapContainer = document.getElementById('map');
     
     if (mapContainer) {
-        // Add Google Maps script dynamically
-        // In a real application, you would replace YOUR_API_KEY with an actual Google Maps API key
-        // loadGoogleMapsScript();
-        
-        // For demo purposes, we'll create a simple map placeholder
-        createMapPlaceholder(mapContainer);
+       //Geolocalização
+       CriacaMapaPlac(mapContainer);
     }
     
+// Geolocalização
+    /*
     function loadGoogleMapsScript() {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap`;
-        script.async = true;
-        script.defer = true;
-        document.head.appendChild(script);
-        
-        // Global callback function for the Google Maps API
-        window.initMap = function() {
-            const map = new google.maps.Map(document.getElementById('map'), {
-                center: { lat: -23.550520, lng: -46.633308 }, // São Paulo coordinates
-                zoom: 12
-            });
-            
-            // Add markers for donations from localStorage
-            const donations = JSON.parse(localStorage.getItem('donations')) || [];
-            
-            donations.forEach(donation => {
-                if (donation.status === 'available' && donation.pickupLatitude && donation.pickupLongitude) {
-                    const marker = new google.maps.Marker({
-                        position: { lat: donation.pickupLatitude, lng: donation.pickupLongitude },
-                        map: map,
-                        title: donation.title
-                    });
-                    
-                    const infoWindow = new google.maps.InfoWindow({
-                        content: `<div><h3>${donation.title}</h3><p>${donation.description}</p><p>Quantidade: ${donation.quantity} ${donation.unit}</p><button onclick="reserveDonation('${donation.id}')">Reservar</button></div>`
-                    });
-                    
-                    marker.addListener('click', function() {
-                        infoWindow.open(map, marker);
-                    });
-                }
-            });
-        };
-    }
+      
+    }*/
     
-    function createMapPlaceholder(container) {
+    function CriacaMapaPlac(container) {
         container.innerHTML = `
             <div style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #f5f5f5; border-radius: 8px;">
                 <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: #4CAF50; margin-bottom: 1rem;"></i>
@@ -75,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Global function to reserve a donation
+    // Funcao global para reservar doação
     window.reserveDonation = function(donationId) {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         
@@ -96,21 +61,21 @@ document.addEventListener('DOMContentLoaded', function() {
         if (donationIndex >= 0) {
             donations[donationIndex].status = 'reserved';
             
-            // Create reservation
+            // Criacao da reserva
             const reservation = {
                 id: generateUUID(),
                 donationId: donationId,
                 ngoId: currentUser.id,
-                scheduledDate: new Date(Date.now() + 24*60*60*1000), // Schedule for tomorrow
+                scheduledDate: new Date(Date.now() + 24*60*60*1000),
                 status: 'scheduled',
                 createdAt: new Date()
             };
             
-            // Save reservation
+            // Reserva a doação
             const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
             reservations.push(reservation);
             
-            // Update localStorage
+            // Atualiza o localStorage
             localStorage.setItem('donations', JSON.stringify(donations));
             localStorage.setItem('reservations', JSON.stringify(reservations));
             

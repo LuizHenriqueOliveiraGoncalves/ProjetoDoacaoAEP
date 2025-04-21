@@ -6,131 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastrar Alimentos | Feed the Future BR</title>
     <meta name="description" content="Cadastre alimentos para doação na plataforma Feed the Future BR." />
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
-    <style>
-      .form-section {
-        padding: 4rem 0;
-        background-color: #f9f9f9;
-      }
-      
-      .form-container {
-        max-width: 800px;
-        margin: 0 auto;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 2rem;
-      }
-      
-      .form-group {
-        margin-bottom: 1.5rem;
-      }
-      
-      .form-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1.5rem;
-      }
-      
-      .form-full-width {
-        grid-column: 1 / -1;
-      }
-      
-      .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-      }
-      
-      .form-group input,
-      .form-group textarea,
-      .form-group select {
-        width: 100%;
-        padding: 0.75rem;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-family: inherit;
-        font-size: 1rem;
-      }
-      
-      .form-group textarea {
-        min-height: 120px;
-        resize: vertical;
-      }
-      
-      .form-section .btn-primary {
-        padding: 0.75rem 1.5rem;
-        font-size: 1rem;
-      }
-      
-      .donation-preview {
-        margin-top: 2rem;
-        padding: 1.5rem;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        background-color: #f5f5f5;
-      }
-      
-      .donation-preview h3 {
-        margin-bottom: 1rem;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 0.5rem;
-      }
-      
-      .preview-item {
-        margin-bottom: 0.5rem;
-      }
-      
-      .preview-label {
-        font-weight: 500;
-      }
-      
-      .impact-info {
-        margin-top: 1.5rem;
-        background-color: #e8f5e9;
-        padding: 1rem;
-        border-radius: 8px;
-        border-left: 4px solid #4CAF50;
-      }
-      
-      .impact-title {
-        color: #2E7D32;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-      }
-      
-      .impact-stats {
-        display: flex;
-        gap: 1.5rem;
-      }
-      
-      .impact-stat {
-        display: flex;
-        align-items: center;
-      }
-      
-      .impact-stat i {
-        color: #4CAF50;
-        margin-right: 0.5rem;
-        font-size: 1.25rem;
-      }
-      
-      @media (max-width: 768px) {
-        .form-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="css/cadastroDoacao.css">
   </head>
   <body>
-    <!-- Header -->
+    <!-- Cabeçalho -->
     <header id="header">
       <div class="container">
         <div class="logo">
@@ -155,7 +39,7 @@
       </div>
     </header>
 
-    <!-- Form Section -->
+    <!-- Seção de Formulário -->
     <section class="form-section">
       <div class="container">
         <h2 class="section-title">Cadastrar Alimentos para Doação</h2>
@@ -223,8 +107,8 @@
               </div>
               
               <div class="form-group form-full-width">
-                <label for="pickupAddress">Endereço para Retirada/Entrega*</label>
-                <input type="text" id="pickupAddress" name="pickupAddress" required placeholder="Endereço completo">
+                <label for="pickupAddress">Endereço para Entrega*</label>
+                <input type="text" id="pickupAddress" name="pickupAddress"  placeholder="Endereço completo">
               </div>
               
               <input type="hidden" id="pickupLatitude" name="pickupLatitude" value="-23.550520">
@@ -299,17 +183,8 @@
         </div>
       </div>
     </footer>
-    
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-      <div class="toast-content">
-        <i class="fas fa-check-circle"></i>
-        <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
-      </div>
-      <div class="toast-progress"></div>
-    </div>
 
-    <!-- Login Modal -->
+    <!--  Modal de Login -->
     <div id="loginModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeLoginModal">&times;</span>
@@ -318,10 +193,12 @@
           <div class="form-group">
             <label for="loginEmail">Email</label>
             <input type="email" id="loginEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
           </div>
           <div class="form-group">
             <label for="loginPassword">Senha</label>
             <input type="password" id="loginPassword" name="password" required>
+            <span class="error-message">Por favor, insira sua senha</span>
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
@@ -331,68 +208,85 @@
       </div>
     </div>
 
-    <!-- Register Modal -->
+    <!--  Modal de Cadastro -->
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeRegisterModal">&times;</span>
         <h2>Cadastro</h2>
         <form id="registerForm">
           <div class="form-group">
-            <label for="regName">Nome</label>
-            <input type="text" id="regName" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="regPhone">Telefone</label>
-            <input type="tel" id="regPhone" name="phone" required>
-          </div>
-          <div class="form-group">
-            <label for="regAddress">Endereço</label>
-            <input type="text" id="regAddress" name="address" required>
-          </div>
-          <div class="form-group">
             <label for="regType">Tipo de Cadastro</label>
             <select id="regType" name="type" required>
               <option value="">Selecione...</option>
-              <option value="business">Estabelecimento</option>
+              <option value="business">Doador/Receptor</option>
               <option value="ngo">ONG</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regName">Nome / Razão Social</label>
+            <input type="text" id="regName" name="name" required>
+            <span class="error-message">Por favor, insira seu nome</span>
+          </div>
+          
           <div class="form-group">
             <label for="regDocumentNumber">CPF/CNPJ</label>
-            <input type="text" id="regDocumentNumber" name="documentNumber" required>
+            <input type="text" id="regDocumentNumber" name="documentNumber" 
+                   pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})" 
+                   title="Digite um CPF (000.000.000-00) ou CNPJ (00.000.000/0000-00) válido" required>
+            <span class="error-message">Por favor, insira um CPF ou CNPJ válido</span>
+            <span class="document-hint" id="documentHint"></span>
           </div>
-          <div class="form-group business-field" style="display: none;">
-            <label for="businessType">Tipo de Estabelecimento</label>
-            <select id="businessType" name="businessType">
-              <option value="">Selecione...</option>
-              <option value="restaurant">Restaurante</option>
-              <option value="supermarket">Supermercado</option>
-              <option value="bakery">Padaria</option>
-              <option value="other">Outro</option>
-            </select>
-          </div>
+          
           <div class="form-group ngo-field" style="display: none;">
             <label for="ngoType">Tipo de ONG</label>
-            <select id="ngoType" name="ngoType">
+            <select id="ngoType" name="ngoType" required>
               <option value="">Selecione...</option>
               <option value="foodBank">Banco de Alimentos</option>
               <option value="shelter">Abrigo</option>
               <option value="communityKitchen">Cozinha Comunitária</option>
               <option value="other">Outro</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regPhone">Telefone</label>
+            <input type="tel" id="regPhone" name="phone" 
+                   pattern="\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}" 
+                   title="Digite um telefone válido (DDD) + número" required>
+            <span class="error-message">Por favor, insira um telefone válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regAddress">Endereço</label>
+            <input type="text" id="regAddress" name="address" required>
+            <span class="error-message">Por favor, insira seu endereço</span>
+          </div>
+          
           <div class="form-group">
             <label for="regPassword">Senha</label>
-            <input type="password" id="regPassword" name="password" required>
+            <input type="password" id="regPassword" name="password" 
+                   minlength="8" 
+                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" 
+                   title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número" 
+                   required>
+            <span class="error-message">A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas e números</span>
           </div>
+          
           <div class="form-group">
             <label for="regConfirmPassword">Confirmar Senha</label>
             <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+            <span class="password-mismatch" id="passwordMismatch">As senhas não coincidem</span>
           </div>
+          
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
         <div class="form-link">
@@ -401,231 +295,18 @@
       </div>
     </div>
 
+   <!-- Notificação de Operação -->
+    <div id="toast" class="toast">
+      <div class="toast-content">
+        <i class="fas fa-check-circle"></i>
+        <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
+      </div>
+      <div class="toast-progress"></div>
+    </div>
+
     <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/donations.js"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Set min date for expiration date to today
-        const today = new Date();
-        const formattedDate = today.toISOString().split('T')[0];
-        document.getElementById('expirationDate').setAttribute('min', formattedDate);
-
-        
-        /*
-        // Check if user is logged in
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (!currentUser || currentUser.type !== 'business') {
-          // Create login message
-          const formContainer = document.querySelector('.form-container');
-          formContainer.innerHTML = `
-            <div style="text-align: center; padding: 2rem;">
-              <i class="fas fa-lock" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-              <h3>Acesso restrito</h3>
-              <p>Apenas estabelecimentos cadastrados podem doar alimentos.</p>
-              <div style="margin-top: 1.5rem;">
-                <button class="btn btn-primary" id="loginRedirect">Fazer Login</button>
-                <button class="btn btn-secondary" id="registerRedirect">Cadastrar-se</button>
-              </div>
-            </div>
-          `;
-          
-          // Add event listeners to buttons
-          document.getElementById('loginRedirect').addEventListener('click', function() {
-            document.getElementById('loginModal').style.display = 'block';
-          });
-          
-          document.getElementById('registerRedirect').addEventListener('click', function() {
-            document.getElementById('registerModal').style.display = 'block';
-          });
-          
-          return;
-        }
-        */
-
-
-        // Preview button functionality
-        const previewBtn = document.getElementById('previewBtn');
-        const donationPreview = document.getElementById('donationPreview');
-        
-        previewBtn.addEventListener('click', function() {
-          const formData = getFormData();
-          
-          if (!validateForm()) {
-            document.getElementById('toastMessage').textContent = 'Por favor, preencha todos os campos obrigatórios.';
-            document.getElementById('toast').classList.add('show');
-            setTimeout(() => {
-              document.getElementById('toast').classList.remove('show');
-            }, 3000);
-            return;
-          }
-          
-          // Show preview
-          const previewContent = donationPreview.querySelector('.preview-content');
-          const expirationDate = new Date(formData.expirationDate);
-          
-          previewContent.innerHTML = `
-            <div class="preview-item"><span class="preview-label">Título:</span> ${formData.title}</div>
-            <div class="preview-item"><span class="preview-label">Descrição:</span> ${formData.description}</div>
-            <div class="preview-item"><span class="preview-label">Categoria:</span> ${getCategoryName(formData.category)}</div>
-            <div class="preview-item"><span class="preview-label">Quantidade:</span> ${formData.quantity} ${formData.unit}</div>
-            <div class="preview-item"><span class="preview-label">Data de Validade:</span> ${expirationDate.toLocaleDateString('pt-BR')}</div>
-            <div class="preview-item"><span class="preview-label">Tipo de Entrega:</span> ${formData.deliveryType === 'pickup' ? 'Retirada no Local' : 'Entrega'}</div>
-            <div class="preview-item"><span class="preview-label">Endereço:</span> ${formData.pickupAddress}</div>
-          `;
-          
-          // Calculate environmental impact
-          const impact = calculateEnvironmentalImpact(formData.quantity);
-          document.getElementById('co2Impact').textContent = `${impact.co2Saved.toFixed(1)} kg de CO2 economizados`;
-          document.getElementById('waterImpact').textContent = `${impact.waterSaved.toFixed(0)} L de água economizados`;
-          
-          // Show preview section
-          donationPreview.style.display = 'block';
-        });
-        
-        // Form submission
-        const donationForm = document.getElementById('donationForm');
-        
-        donationForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          if (!validateForm()) {
-            document.getElementById('toastMessage').textContent = 'Por favor, preencha todos os campos obrigatórios.';
-            document.getElementById('toast').classList.add('show');
-            setTimeout(() => {
-              document.getElementById('toast').classList.remove('show');
-            }, 3000);
-            return;
-          }
-          
-          const formData = getFormData();
-          
-          // Create donation object
-          const donation = {
-            id: generateUUID(),
-            businessId: currentUser.id,
-            title: formData.title,
-            description: formData.description,
-            category: formData.category,
-            quantity: parseFloat(formData.quantity),
-            unit: formData.unit,
-            expirationDate: new Date(formData.expirationDate),
-            pickupAddress: formData.pickupAddress,
-            pickupLatitude: parseFloat(formData.pickupLatitude),
-            pickupLongitude: parseFloat(formData.pickupLongitude),
-            deliveryType: formData.deliveryType,
-            status: 'available',
-            createdAt: new Date()
-          };
-          
-          // Save donation
-          let donations = JSON.parse(localStorage.getItem('donations')) || [];
-          donations.push(donation);
-          localStorage.setItem('donations', JSON.stringify(donations));
-          
-          // Calculate and save environmental impact
-          const impact = calculateEnvironmentalImpact(donation.quantity);
-          let impacts = JSON.parse(localStorage.getItem('environmentalImpacts')) || [];
-          impacts.push({
-            id: generateUUID(),
-            donationId: donation.id,
-            co2Saved: impact.co2Saved,
-            waterSaved: impact.waterSaved,
-            createdAt: new Date()
-          });
-          localStorage.setItem('environmentalImpacts', JSON.stringify(impacts));
-          
-          // Show success message
-          document.getElementById('toastMessage').textContent = 'Doação cadastrada com sucesso!';
-          document.getElementById('toast').classList.add('show');
-          
-          // Reset form and hide preview
-          donationForm.reset();
-          donationPreview.style.display = 'none';
-          
-          // Redirect to donations page after 3 seconds
-          setTimeout(() => {
-            document.getElementById('toast').classList.remove('show');
-            window.location.href = 'doacoes.html';
-          }, 3000);
-        });
-        
-        // Helper functions
-        function getFormData() {
-          return {
-            title: document.getElementById('title').value,
-            description: document.getElementById('description').value,
-            category: document.getElementById('category').value,
-            quantity: document.getElementById('quantity').value,
-            unit: document.getElementById('unit').value,
-            expirationDate: document.getElementById('expirationDate').value,
-            deliveryType: document.getElementById('deliveryType').value,
-            pickupAddress: document.getElementById('pickupAddress').value,
-            pickupLatitude: document.getElementById('pickupLatitude').value,
-            pickupLongitude: document.getElementById('pickupLongitude').value
-          };
-        }
-        
-        function validateForm() {
-          const requiredFields = [
-            'title', 'description', 'category', 'quantity', 
-            'unit', 'expirationDate', 'deliveryType', 'pickupAddress'
-          ];
-          
-          for (let field of requiredFields) {
-            const element = document.getElementById(field);
-            if (!element.value) {
-              element.focus();
-              return false;
-            }
-          }
-          
-          return true;
-        }
-        
-        function calculateEnvironmentalImpact(quantity) {
-          // Simple calculation - in a real app this would be more sophisticated
-          // based on food type, distance, etc.
-          const co2PerKg = 2.5; // kg of CO2 saved per kg of food not wasted
-          const waterPerKg = 1000; // liters of water saved per kg of food not wasted
-          
-          // Convert to kg if necessary
-          let quantityInKg = parseFloat(quantity);
-          const unit = document.getElementById('unit').value;
-          
-          if (unit === 'g') {
-            quantityInKg = quantityInKg / 1000;
-          }
-          
-          return {
-            co2Saved: quantityInKg * co2PerKg,
-            waterSaved: quantityInKg * waterPerKg
-          };
-        }
-        
-        function getCategoryName(category) {
-          const categories = {
-            'prepared': 'Alimentos Preparados',
-            'produce': 'Frutas e Vegetais',
-            'bakery': 'Padaria e Confeitaria',
-            'canned': 'Alimentos Enlatados',
-            'dairy': 'Laticínios',
-            'meat': 'Carnes',
-            'grain': 'Grãos e Cereais',
-            'other': 'Outros'
-          };
-          
-          return categories[category] || category;
-        }
-        
-        function generateUUID() {
-          return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-              const r = Math.random() * 16 | 0;
-              const v = c === 'x' ? r : (r & 0x3 | 0x8);
-              return v.toString(16);
-          });
-        }
-      });
-    </script>
+    <script src="js/cadastroAlimento.js"></script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 
-/* Base styles and resets */
+
 * {
     margin: 0;
     padding: 0;
@@ -775,4 +775,36 @@ footer {
 }
 
 
+ /* Estilos adicionais para validação */
+ input:invalid, select:invalid {
+    border-color: #ff4444;
+  }
 
+  input:invalid:focus, select:invalid:focus {
+    box-shadow: 0 0 0 2px rgba(255, 68, 68, 0.2);
+  }
+
+  .error-message {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  input:invalid ~ .error-message,
+  select:invalid ~ .error-message {
+    display: block;
+  }
+
+  .password-mismatch {
+    color: #ff4444;
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+    display: none;
+  }
+
+  .document-hint {
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 0.25rem;
+  }

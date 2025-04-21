@@ -6,18 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doações Disponíveis | Feed the Future BR</title>
     <meta name="description" content="Lista de doações de alimentos disponíveis para ONGs." />
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/doacao.css">
   </head>
   <body>
-    <!-- Header -->
+    <!-- Cabeçalho -->
     <header id="header">
       <div class="container">
         <div class="logo">
@@ -42,7 +39,7 @@
       </div>
     </header>
 
-    <!-- Donations Section -->
+    <!--  Seção de Notificação -->
     <section class="donations-section">
       <div class="container">
         <h2 class="section-title">Doações Disponíveis</h2>
@@ -68,7 +65,7 @@
         </div>
         
         <div class="donation-grid" id="donationGrid">
-          <!-- Donation cards will be dynamically inserted here -->
+          <!-- Os cards será inserido aqui -->
         </div>
         
         <div class="pagination" id="pagination">
@@ -122,16 +119,8 @@
       </div>
     </footer>
 
-    <!-- Toast Notification -->
-    <div id="toast" class="toast">
-      <div class="toast-content">
-        <i class="fas fa-check-circle"></i>
-        <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
-      </div>
-      <div class="toast-progress"></div>
-    </div>
 
-    <!-- Login Modal -->
+    <!--  Modal de Login -->
     <div id="loginModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeLoginModal">&times;</span>
@@ -140,10 +129,12 @@
           <div class="form-group">
             <label for="loginEmail">Email</label>
             <input type="email" id="loginEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
           </div>
           <div class="form-group">
             <label for="loginPassword">Senha</label>
             <input type="password" id="loginPassword" name="password" required>
+            <span class="error-message">Por favor, insira sua senha</span>
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
@@ -153,68 +144,85 @@
       </div>
     </div>
 
-    <!-- Register Modal -->
+    <!--  Modal de Cadastro -->
     <div id="registerModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeRegisterModal">&times;</span>
         <h2>Cadastro</h2>
         <form id="registerForm">
           <div class="form-group">
-            <label for="regName">Nome</label>
-            <input type="text" id="regName" name="name" required>
-          </div>
-          <div class="form-group">
-            <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="regPhone">Telefone</label>
-            <input type="tel" id="regPhone" name="phone" required>
-          </div>
-          <div class="form-group">
-            <label for="regAddress">Endereço</label>
-            <input type="text" id="regAddress" name="address" required>
-          </div>
-          <div class="form-group">
             <label for="regType">Tipo de Cadastro</label>
             <select id="regType" name="type" required>
               <option value="">Selecione...</option>
-              <option value="business">Estabelecimento</option>
+              <option value="business">Doador/Receptor</option>
               <option value="ngo">ONG</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regName">Nome / Razão Social</label>
+            <input type="text" id="regName" name="name" required>
+            <span class="error-message">Por favor, insira seu nome</span>
+          </div>
+          
           <div class="form-group">
             <label for="regDocumentNumber">CPF/CNPJ</label>
-            <input type="text" id="regDocumentNumber" name="documentNumber" required>
+            <input type="text" id="regDocumentNumber" name="documentNumber" 
+                   pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})" 
+                   title="Digite um CPF (000.000.000-00) ou CNPJ (00.000.000/0000-00) válido" required>
+            <span class="error-message">Por favor, insira um CPF ou CNPJ válido</span>
+            <span class="document-hint" id="documentHint"></span>
           </div>
-          <div class="form-group business-field" style="display: none;">
-            <label for="businessType">Tipo de Estabelecimento</label>
-            <select id="businessType" name="businessType">
-              <option value="">Selecione...</option>
-              <option value="restaurant">Restaurante</option>
-              <option value="supermarket">Supermercado</option>
-              <option value="bakery">Padaria</option>
-              <option value="other">Outro</option>
-            </select>
-          </div>
+          
           <div class="form-group ngo-field" style="display: none;">
             <label for="ngoType">Tipo de ONG</label>
-            <select id="ngoType" name="ngoType">
+            <select id="ngoType" name="ngoType" required>
               <option value="">Selecione...</option>
               <option value="foodBank">Banco de Alimentos</option>
               <option value="shelter">Abrigo</option>
               <option value="communityKitchen">Cozinha Comunitária</option>
               <option value="other">Outro</option>
             </select>
+            <span class="error-message">Por favor, selecione um tipo</span>
           </div>
+          
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <input type="email" id="regEmail" name="email" required>
+            <span class="error-message">Por favor, insira um email válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regPhone">Telefone</label>
+            <input type="tel" id="regPhone" name="phone" 
+                   pattern="\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}" 
+                   title="Digite um telefone válido (DDD) + número" required>
+            <span class="error-message">Por favor, insira um telefone válido</span>
+          </div>
+          
+          <div class="form-group">
+            <label for="regAddress">Endereço</label>
+            <input type="text" id="regAddress" name="address" required>
+            <span class="error-message">Por favor, insira seu endereço</span>
+          </div>
+          
           <div class="form-group">
             <label for="regPassword">Senha</label>
-            <input type="password" id="regPassword" name="password" required>
+            <input type="password" id="regPassword" name="password" 
+                   minlength="8" 
+                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" 
+                   title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número" 
+                   required>
+            <span class="error-message">A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas e números</span>
           </div>
+          
           <div class="form-group">
             <label for="regConfirmPassword">Confirmar Senha</label>
             <input type="password" id="regConfirmPassword" name="confirmPassword" required>
+            <span class="password-mismatch" id="passwordMismatch">As senhas não coincidem</span>
           </div>
+          
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
         <div class="form-link">
@@ -223,7 +231,7 @@
       </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- Notificação de Operação -->
     <div id="toast" class="toast">
       <div class="toast-content">
         <i class="fas fa-check-circle"></i>
@@ -234,246 +242,9 @@
 
     <script src="js/script.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/donations.js"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Get donation data
-        const donations = JSON.parse(localStorage.getItem('donations')) || [];
-        const donationGrid = document.getElementById('donationGrid');
-        
-        // Display donations
-        function displayDonations() {
-          if (donations.length === 0) {
-            donationGrid.innerHTML = `
-              <div class="no-results">
-                <i class="fas fa-box-open" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-                <h3>Nenhuma doação disponível</h3>
-                <p>No momento não há doações disponíveis. Volte mais tarde.</p>
-              </div>
-            `;
-            return;
-          }
-          
-          donationGrid.innerHTML = '';
-          
-          donations.forEach(donation => {
-            if (donation.status === 'available') {
-              // Format expiration date
-              const expirationDate = new Date(donation.expirationDate);
-              const formattedDate = expirationDate.toLocaleDateString('pt-BR');
-              
-              // Create donation card
-              const donationCard = document.createElement('div');
-              donationCard.className = 'donation-card';
-              donationCard.innerHTML = `
-                <div class="donation-image" style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
-                  <i class="fas fa-utensils" style="font-size: 3rem; color: #4CAF50;"></i>
-                </div>
-                <div class="donation-content">
-                  <h3 class="donation-title">${donation.title}</h3>
-                  <div class="donation-meta">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>${donation.pickupAddress.substring(0, 30)}...</span>
-                  </div>
-                  <div class="donation-meta">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Validade: ${formattedDate}</span>
-                  </div>
-                  <p class="donation-description">${donation.description}</p>
-                  <div class="donation-footer">
-                    <div class="donation-quantity">
-                      ${donation.quantity} ${donation.unit}
-                    </div>
-                    <button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>
-                  </div>
-                </div>
-              `;
-              
-              donationGrid.appendChild(donationCard);
-            }
-          });
-          
-          // Add event listeners to reserve buttons
-          const reserveBtns = document.querySelectorAll('.reserve-btn');
-          reserveBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-              const donationId = this.getAttribute('data-id');
-              reserveDonation(donationId);
-            });
-          });
-        }
-        
-        // Initialize display
-        displayDonations();
-        
-        // Search functionality
-        const searchBtn = document.getElementById('searchBtn');
-        const searchInput = document.getElementById('searchInput');
-        
-        searchBtn.addEventListener('click', function() {
-          const searchTerm = searchInput.value.toLowerCase();
-          filterDonations(searchTerm);
-        });
-        
-        searchInput.addEventListener('keyup', function(event) {
-          if (event.key === 'Enter') {
-            const searchTerm = searchInput.value.toLowerCase();
-            filterDonations(searchTerm);
-          }
-        });
-        
-        function filterDonations(searchTerm) {
-          const filteredDonations = donations.filter(donation => {
-            return donation.status === 'available' && (
-              donation.title.toLowerCase().includes(searchTerm) ||
-              donation.description.toLowerCase().includes(searchTerm) ||
-              donation.category.toLowerCase().includes(searchTerm)
-            );
-          });
-          
-          updateDonationDisplay(filteredDonations);
-        }
-        
-        function updateDonationDisplay(filteredDonations) {
-          if (filteredDonations.length === 0) {
-            donationGrid.innerHTML = `
-              <div class="no-results">
-                <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-                <h3>Nenhuma doação encontrada</h3>
-                <p>Tente outra busca ou verifique mais tarde.</p>
-              </div>
-            `;
-            return;
-          }
-          
-          donationGrid.innerHTML = '';
-          
-          filteredDonations.forEach(donation => {
-            // Format expiration date
-            const expirationDate = new Date(donation.expirationDate);
-            const formattedDate = expirationDate.toLocaleDateString('pt-BR');
-            
-            // Create donation card
-            const donationCard = document.createElement('div');
-            donationCard.className = 'donation-card';
-            donationCard.innerHTML = `
-              <div class="donation-image" style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
-                <i class="fas fa-utensils" style="font-size: 3rem; color: #4CAF50;"></i>
-              </div>
-              <div class="donation-content">
-                <h3 class="donation-title">${donation.title}</h3>
-                <div class="donation-meta">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>${donation.pickupAddress.substring(0, 30)}...</span>
-                </div>
-                <div class="donation-meta">
-                  <i class="fas fa-calendar-alt"></i>
-                  <span>Validade: ${formattedDate}</span>
-                </div>
-                <p class="donation-description">${donation.description}</p>
-                <div class="donation-footer">
-                  <div class="donation-quantity">
-                    ${donation.quantity} ${donation.unit}
-                  </div>
-                  <button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>
-                </div>
-              </div>
-            `;
-            
-            donationGrid.appendChild(donationCard);
-          });
-        }
-        
-        // Sort functionality
-        const sortSelect = document.getElementById('sort');
-        sortSelect.addEventListener('change', function() {
-          const sortValue = this.value;
-          sortDonations(sortValue);
-        });
-        
-        function sortDonations(sortBy) {
-          let sortedDonations = [...donations].filter(d => d.status === 'available');
-          
-          switch(sortBy) {
-            case 'date':
-              sortedDonations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-              break;
-            case 'expiration':
-              sortedDonations.sort((a, b) => new Date(a.expirationDate) - new Date(b.expirationDate));
-              break;
-            case 'distance':
-              // In a real app, this would calculate distance based on user's location
-              // For now, we'll just show them in the default order
-              break;
-          }
-          
-          updateDonationDisplay(sortedDonations);
-        }
-      });
       
-      // Reservation functionality
-      function reserveDonation(donationId) {
-        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        
-        if (!currentUser) {
-          document.getElementById('loginModal').style.display = 'block';
-          document.getElementById('toastMessage').textContent = 'Você precisa estar logado para reservar uma doação.';
-          document.getElementById('toast').classList.add('show');
-          setTimeout(() => {
-            document.getElementById('toast').classList.remove('show');
-          }, 3000);
-          return;
-        }
-        
-        if (currentUser.type !== 'ngo') {
-          document.getElementById('toastMessage').textContent = 'Apenas ONGs podem reservar doações.';
-          document.getElementById('toast').classList.add('show');
-          setTimeout(() => {
-            document.getElementById('toast').classList.remove('show');
-          }, 3000);
-          return;
-        }
-        
-        const donations = JSON.parse(localStorage.getItem('donations')) || [];
-        const donationIndex = donations.findIndex(d => d.id === donationId);
-        
-        if (donationIndex >= 0) {
-          donations[donationIndex].status = 'reserved';
-          
-          // Create reservation
-          const reservation = {
-            id: generateUUID(),
-            donationId: donationId,
-            ngoId: currentUser.id,
-            scheduledDate: new Date(Date.now() + 24*60*60*1000), // Schedule for tomorrow
-            status: 'scheduled',
-            createdAt: new Date()
-          };
-          
-          // Save reservation
-          const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
-          reservations.push(reservation);
-          
-          // Update localStorage
-          localStorage.setItem('donations', JSON.stringify(donations));
-          localStorage.setItem('reservations', JSON.stringify(reservations));
-          
-          document.getElementById('toastMessage').textContent = 'Doação reservada com sucesso! A coleta foi agendada para amanhã.';
-          document.getElementById('toast').classList.add('show');
-          setTimeout(() => {
-            document.getElementById('toast').classList.remove('show');
-            // Reload the page to update the donation list
-            window.location.reload();
-          }, 3000);
-        }
-      }
-      
-      function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-      }
     </script>
   </body>
 </html>

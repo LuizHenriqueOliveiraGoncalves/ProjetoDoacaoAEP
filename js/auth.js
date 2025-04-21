@@ -1,13 +1,13 @@
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Registration functionality
+  
     const registerForm = document.getElementById('registerForm');
     
     if (registerForm) {
         registerForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Form validation
+          
             const password = document.getElementById('regPassword').value;
             const confirmPassword = document.getElementById('regConfirmPassword').value;
             
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Get form data
+            
             const formData = {
                 id: generateUUID(),
                 name: document.getElementById('regName').value,
@@ -25,28 +25,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 address: document.getElementById('regAddress').value,
                 type: document.getElementById('regType').value,
                 documentNumber: document.getElementById('regDocumentNumber').value,
-                password: password, // In a real app, this would be hashed
+                password: password, 
                 createdAt: new Date()
             };
             
-            // Add type-specific fields
-            if (formData.type === 'business') {
-                formData.businessType = document.getElementById('businessType').value;
-            } else if (formData.type === 'ngo') {
+           
+             if (formData.type === 'ngo') {
                 formData.ngoType = document.getElementById('ngoType').value;
             }
             
-            // Save user to localStorage
+           
             saveUser(formData);
             
-            // Show success message and close modal
+            
             showToast('Cadastro realizado com sucesso!');
             document.getElementById('registerModal').style.display = 'none';
             registerForm.reset();
         });
     }
     
-    // Login functionality
+  
     const loginForm = document.getElementById('loginForm');
     
     if (loginForm) {
@@ -59,16 +57,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const user = authenticateUser(email, password);
             
             if (user) {
-                // Save logged in user
+               
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 
-                // Show success message
+                
                 showToast('Login realizado com sucesso!');
                 document.getElementById('loginModal').style.display = 'none';
                 loginForm.reset();
                 
-                // Redirect or update UI for logged in user
-                // This will be expanded in a real application
+               
                 updateUIForLoggedInUser(user);
             } else {
                 alert('Email ou senha incorretos!');
@@ -76,11 +73,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Helper functions
+ 
     function saveUser(userData) {
         let users = JSON.parse(localStorage.getItem('users')) || [];
         
-        // Check if email already exists
+       
         const existingUser = users.find(user => user.email === userData.email);
         if (existingUser) {
             alert('Este email já está cadastrado!');
@@ -106,18 +103,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updateUIForLoggedInUser(user) {
-        // This can be expanded for different user types
+       
         const loginBtn = document.getElementById('loginBtn');
         const registerBtn = document.getElementById('registerBtn');
         
         if (loginBtn) loginBtn.textContent = 'Minha Conta';
         if (registerBtn) registerBtn.style.display = 'none';
         
-        // We would update more UI elements based on user type here
+       
         console.log(`Logged in as: ${user.name} (${user.type})`);
     }
     
-    // Check if user is already logged in
+
     function checkLoggedInUser() {
         const currentUser = JSON.parse(localStorage.getItem('currentUser'));
         if (currentUser) {
@@ -125,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Show toast notification
+  
     function showToast(message) {
         const toast = document.getElementById('toast');
         const toastMessage = document.getElementById('toastMessage');
@@ -140,6 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Check logged in user on page load
+   
     checkLoggedInUser();
 });
