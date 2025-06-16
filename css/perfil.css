@@ -1,6 +1,6 @@
-/* perfil.css - Estilos dedicados para a página de perfil */
+/* perfil.css - Estilos para a página de perfil do usuário */
 
-/* Reset e Variáveis */
+/* Variáveis CSS */
 :root {
   --primary-color: #4CAF50;
   --primary-light: #81C784;
@@ -19,7 +19,7 @@
   --transition: all 0.3s ease;
 }
 
-/* Layout Base */
+/* Layout base da página */
 .profile-page {
   display: flex;
   flex-direction: column;
@@ -29,6 +29,7 @@
   color: var(--text-color);
 }
 
+/* Container principal */
 .profile-container {
   display: flex;
   flex: 1;
@@ -45,6 +46,7 @@
   position: relative;
 }
 
+/* Card da sidebar */
 .profile-card {
   background: var(--bg-color);
   border-radius: var(--border-radius);
@@ -54,6 +56,7 @@
   top: 1rem;
 }
 
+/* Avatar */
 .profile-avatar {
   text-align: center;
   margin-bottom: 1.5rem;
@@ -73,6 +76,7 @@
   border: 3px solid var(--primary-color);
 }
 
+/* Nome e tipo de conta */
 .profile-name {
   font-size: 1.3rem;
   font-weight: 600;
@@ -84,6 +88,7 @@
   font-size: 0.9rem;
 }
 
+/* Menu lateral */
 .profile-menu {
   margin-top: 1.5rem;
 }
@@ -114,7 +119,7 @@
   color: white;
 }
 
-/* Conteúdo Principal */
+/* Conteúdo principal */
 .profile-content {
   flex: 1;
   display: flex;
@@ -122,6 +127,7 @@
   gap: 1.5rem;
 }
 
+/* Seções internas */
 .profile-section {
   background: var(--bg-color);
   border-radius: var(--border-radius);
@@ -129,6 +135,7 @@
   padding: 1.5rem;
 }
 
+/* Cabeçalho da seção */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -150,13 +157,14 @@
   color: var(--primary-color);
 }
 
-/* Informações do Perfil */
+/* Grid de informações */
 .info-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
+/* Grupo de informação */
 .info-group {
   margin-bottom: 1rem;
 }
@@ -175,7 +183,7 @@
   border-bottom: 1px solid var(--bg-dark);
 }
 
-/* Formulário de Edição */
+/* Formulário de edição */
 .edit-form .form-group {
   margin-bottom: 1rem;
 }
@@ -204,6 +212,7 @@
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
+/* Ações do formulário */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -338,6 +347,7 @@ input:invalid ~ .error-message {
   display: block;
 }
 
+/* Botões */
 .btn {
   display: inline-block;
   padding: 0.75rem 1.5rem;

@@ -1,8 +1,12 @@
+// donations.js
+// Gerencia a listagem, filtro, reserva e exclusão de doações
+
 document.addEventListener("DOMContentLoaded", async function () {
   const API_BASE_URL = "https://localhost:7261/api";
   const donationGrid = document.getElementById("donationGrid");
   let currentDonations = [];
 
+  // Atualiza perfil do usuário da API e armazena localmente
   async function refreshUserProfile() {
     const token = localStorage.getItem("jwtToken");
     if (!token) return;
@@ -23,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  // Função genérica para chamadas API com token JWT e tratamento básico de erros
   async function fetchApi(endpoint, method = "GET", body = null) {
     const token = localStorage.getItem("jwtToken");
 
@@ -53,13 +58,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         return;
       }
 
-      if (!response.ok)
-        throw new Error(`Erro na requisição: ${response.status}`);
+      if (!response.ok) throw new Error(`Erro na requisição: ${response.status}`);
 
-      // Se o status for 204 (No Content), retorne null
-      if (response.status === 204) {
-        return null;
-      }
+      if (response.status === 204) return null; // Sem conteúdo
 
       return await response.json();
     } catch (error) {
@@ -69,16 +70,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  // Redireciona para login
   function redirectToLogin() {
     window.location.href = "/index.html";
   }
 
+  // Carrega e exibe as doações, podendo ordenar por data, etc
   async function loadDonations(sort = "date") {
     try {
-      donationGrid.innerHTML =
-        '<div class="loading">Carregando doações...</div>';
+      donationGrid.innerHTML = '<div class="loading">Carregando doações...</div>';
 
-      await refreshUserProfile(); // ✅ Atualiza o usuário antes de carregar
+      await refreshUserProfile();
 
       const user = JSON.parse(localStorage.getItem("user"));
       let endpoint = "/Donation/MyDonations";
@@ -101,6 +103,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  // Exibe mensagem de erro no container
   function handleLoadError(error) {
     console.error("Erro ao carregar doações:", error);
     donationGrid.innerHTML = `
@@ -111,6 +114,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     `;
   }
 
+  // Exibe as doações na tela em formato de cards
   function displayDonations(donations) {
     if (donations.length === 0) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -150,57 +154,51 @@ document.addEventListener("DOMContentLoaded", async function () {
       }`;
 
       donationCard.innerHTML = `
-  <div class="donation-content">
-    <h3 class="donation-title">${donation.title}</h3>
-    
-    <div class="donation-meta">
-      <i class="fas fa-tag"></i>
-      <span>${donation.category}</span>
-    </div>
+        <div class="donation-content">
+          <h3 class="donation-title">${donation.title}</h3>
+          <div class="donation-meta">
+            <i class="fas fa-tag"></i>
+            <span>${donation.category}</span>
+          </div>
+          <div class="donation-meta">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>${creatorAddress}</span>
+          </div>
+          <div class="donation-meta">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Validade: ${formattedDate}</span>
+          </div>
+          <p class="donation-description">${donation.description}</p>
+          <div class="donation-footer">
+            <div class="donation-impact-line">
+              <div class="donation-quantity">${donation.quantity} ${donation.unit}</div>
+              <span title="CO2 Impact">🌱 ${donation.co2Impact || 0}kg CO2</span>
+              <span title="Water Impact">💧 ${donation.waterImpact || 0}L</span>
+            </div>
 
-    <div class="donation-meta">
-      <i class="fas fa-map-marker-alt"></i>
-      <span>${creatorAddress}</span>
-    </div>
-
-    <div class="donation-meta">
-      <i class="fas fa-calendar-alt"></i>
-      <span>Validade: ${formattedDate}</span>
-    </div>
-
-    <p class="donation-description">${donation.description}</p>
-
-    <div class="donation-footer">
-      <div class="donation-impact-line">
-        <div class="donation-quantity">${donation.quantity} ${
-        donation.unit
-      }</div>
-        <span title="CO2 Impact">🌱 ${donation.co2Impact || 0}kg CO2</span>
-        <span title="Water Impact">💧 ${donation.waterImpact || 0}L</span>
-      </div>
-
-      ${
-        isOngUser && !isMyDonation && !isReserved
-          ? `<button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>`
-          : ""
-      }
-      ${
-        isReserved && !isMyDonation
-          ? `<span class="donation-status">Reservada</span>`
-          : ""
-      }
-      ${
-        isMyDonation
-          ? `<button class="btn btn-danger delete-btn" data-id="${donation.id}">Excluir</button>`
-          : ""
-      }
-    </div>
-  </div>
-`;
+            ${
+              isOngUser && !isMyDonation && !isReserved
+                ? `<button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>`
+                : ""
+            }
+            ${
+              isReserved && !isMyDonation
+                ? `<span class="donation-status">Reservada</span>`
+                : ""
+            }
+            ${
+              isMyDonation
+                ? `<button class="btn btn-danger delete-btn" data-id="${donation.id}">Excluir</button>`
+                : ""
+            }
+          </div>
+        </div>
+      `;
 
       donationGrid.appendChild(donationCard);
     });
 
+    // Adiciona eventos para reservar e excluir doações
     document.querySelectorAll(".reserve-btn").forEach((btn) => {
       btn.addEventListener("click", () => reserveDonation(btn.dataset.id));
     });
@@ -210,6 +208,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     });
   }
 
+  // Reserva uma doação (PATCH)
   async function reserveDonation(donationId) {
     try {
       await fetchApi(`/Donation/${donationId}/reserve`, "PATCH");
@@ -220,6 +219,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   }
 
+  // Exclui uma doação após confirmação do usuário
   async function deleteDonation(donationId) {
     showConfirmToast(
       "Tem certeza que deseja excluir esta doação?",
@@ -235,6 +235,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     );
   }
 
+  // Mostra toast simples (pode ser substituído pela função do common-ui.js)
   function showToast(message, type = "success") {
     const toast = document.getElementById("toast");
     const toastMessage = document.getElementById("toastMessage");
@@ -247,6 +248,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     }, 3000);
   }
 
+  // Filtra as doações pelo termo de pesquisa no título, descrição e categoria
   function filterDonations(searchTerm) {
     if (!searchTerm) {
       return displayDonations(currentDonations);
@@ -262,6 +264,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     displayDonations(filtered);
   }
 
+  // Mostra um toast de confirmação com ações para sim e não
   function showConfirmToast(message, onConfirm) {
     const toast = document.getElementById("confirmToast");
     const toastMessage = document.getElementById("confirmMessage");
@@ -271,7 +274,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     toastMessage.textContent = message;
     toast.classList.add("show");
 
-    // Remove qualquer listener antigo
     confirmYes.onclick = null;
     confirmNo.onclick = null;
 
@@ -285,10 +287,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     };
   }
 
+  // Recarrega a lista de doações com base na ordenação selecionada
   async function sortDonations(sortBy) {
     await loadDonations(sortBy);
   }
 
+  // Eventos do botão buscar e filtro de pesquisa por tecla Enter
   document.getElementById("searchBtn").addEventListener("click", () => {
     const searchTerm = document.getElementById("searchInput").value;
     filterDonations(searchTerm);
@@ -301,12 +305,15 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
   });
 
+  // Evento para alterar ordenação
   document.getElementById("sort").addEventListener("change", (event) => {
     sortDonations(event.target.value);
   });
 
+  // Carrega doações inicialmente
   await loadDonations();
 
+  // Atualiza doações a cada 2 minutos
   setInterval(() => {
     loadDonations(document.getElementById("sort").value);
   }, 120000);

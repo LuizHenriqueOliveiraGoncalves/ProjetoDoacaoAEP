@@ -1,8 +1,12 @@
-// Redireciona imediatamente se não houver token salvo
+// meusPedidos.js
+// Controla a visualização dos pedidos reservados por uma ONG
+
+// Redireciona para login se não houver token
 if (!localStorage.getItem("jwtToken")) {
   window.location.href = "login.html";
 }
 
+// Abre modal de detalhes do contato
 function abrirModal(nome, telefone, email) {
   document.getElementById("modalNome").textContent = nome;
   document.getElementById("modalTelefone").textContent = telefone;
@@ -10,11 +14,12 @@ function abrirModal(nome, telefone, email) {
   document.getElementById("detalhesModal").style.display = "flex";
 }
 
+// Fecha o modal
 function fecharModal() {
   document.getElementById("detalhesModal").style.display = "none";
 }
 
-// Verifica o tipo de usuário antes de carregar os pedidos
+// Verifica se o usuário é ONG antes de carregar os pedidos
 async function verificarTipoUsuarioAntesDeCarregar() {
   const token = localStorage.getItem("jwtToken");
 
@@ -42,7 +47,7 @@ async function verificarTipoUsuarioAntesDeCarregar() {
   }
 }
 
-// Carrega as doações reservadas pela ONG autenticada
+// Carrega doações reservadas pela ONG
 async function carregarDoacoesReservadas() {
   const token = localStorage.getItem("jwtToken");
 
@@ -64,7 +69,7 @@ async function carregarDoacoesReservadas() {
   }
 }
 
-// Cria os cards dinamicamente com base nos dados da API
+// Cria cards HTML dinamicamente para as doações
 function criarCardsDoacoes(doacoes) {
   const container = document.getElementById("cardContainer");
   container.innerHTML = "";
@@ -108,6 +113,7 @@ function criarCardsDoacoes(doacoes) {
   });
 }
 
+// Toast de confirmação para ações que precisam de confirmação
 function showConfirmToast(message, onConfirm) {
   const confirmToast = document.getElementById("confirmToast");
   const confirmMessage = document.getElementById("confirmMessage");
@@ -134,7 +140,7 @@ function showConfirmToast(message, onConfirm) {
   };
 }
 
-// Função para exibir Toasts (caso já tenha, pode usar a sua)
+// Função para mostrar toasts estilizados (sucesso, erro, info)
 function showToast(message, type = "success") {
   const toast = document.getElementById("toast");
   const toastMessage = document.getElementById("toastMessage");
@@ -160,7 +166,7 @@ function showToast(message, type = "success") {
   setTimeout(() => toast.classList.remove("show"), 2100);
 }
 
-// Listener para o botão "Coletado"
+// Evento global para o botão "Coletado" para marcar doação como coletada (deleta)
 document.addEventListener("click", async function (e) {
   if (e.target && e.target.classList.contains("coletado-btn")) {
     const donationId = e.target.getAttribute("data-id");
@@ -200,7 +206,7 @@ document.addEventListener("click", async function (e) {
   }
 });
 
-// Executa a verificação inicial ao carregar a página
+// Ao carregar a página, verifica o tipo do usuário para carregar pedidos reservados
 document.addEventListener(
   "DOMContentLoaded",
   verificarTipoUsuarioAntesDeCarregar

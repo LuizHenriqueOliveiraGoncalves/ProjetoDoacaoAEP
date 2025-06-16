@@ -1,3 +1,6 @@
+// reset-password.js
+// Controle do formulário de redefinição de senha via token
+
 document.addEventListener("DOMContentLoaded", function () {
   const urlParams = new URLSearchParams(window.location.search);
   const token = urlParams.get("token");
@@ -5,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("resetPasswordForm");
   const messageDiv = document.getElementById("resetMessage");
 
+  // Se token inválido, mostra erro e oculta formulário
   if (!token) {
     showToast("Token inválido ou expirado. Por favor, solicite um novo link.", "error");
     form.style.display = "none";
@@ -17,17 +21,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const newPassword = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
+    // Valida tamanho mínimo da senha
     if (newPassword.length < 6) {
       showToast("A nova senha deve ter pelo menos 6 caracteres.", "error");
       return;
     }
 
+    // Confirma se as senhas coincidem
     if (newPassword !== confirmPassword) {
       showToast("As senhas digitadas não coincidem.", "error");
       return;
     }
 
     try {
+      // Envia nova senha para API
       const response = await fetch("https://localhost:7261/api/Auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -53,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Toast reutilizável
+  // Função toast reutilizável dentro deste arquivo
   function showToast(message, type = "info") {
     const toast = document.getElementById("toast");
     const toastMessage = document.getElementById("toastMessage");

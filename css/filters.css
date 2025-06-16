@@ -1,4 +1,6 @@
-/* Estilos para os filtros */
+/* filters.css - Estilos para os filtros */
+
+/* Container das opções de filtro */
 .filter-options {
   display: flex;
   flex-wrap: wrap;
@@ -6,17 +8,20 @@
   align-items: center;
 }
 
+/* Cada opção individual */
 .filter-option {
   display: flex;
   flex-direction: column;
 }
 
+/* Rótulos dos filtros */
 .filter-option label {
   font-size: 14px;
   margin-bottom: 5px;
   font-weight: 500;
 }
 
+/* Selects e inputs text dentro do filtro */
 .filter-option select, 
 .filter-option input[type="text"] {
   padding: 8px 12px;
@@ -25,6 +30,7 @@
   font-size: 14px;
 }
 
+/* Opção checkbox com alinhamento horizontal */
 .checkbox-option {
   flex-direction: row;
   align-items: center;
@@ -35,6 +41,7 @@
   margin: 0;
 }
 
+/* Ações dos filtros (botões) */
 .filter-actions {
   display: flex;
   gap: 10px;

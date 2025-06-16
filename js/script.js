@@ -2,17 +2,23 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================================
   // MENU TOGGLE FUNCTIONALITY
   // =============================================
+  // Controla o botão que abre/fecha o menu no mobile
   const menuToggle = document.getElementById("menu-toggle");
   const nav = document.getElementById("nav");
 
   if (menuToggle) {
     menuToggle.addEventListener("click", function () {
-      nav.classList.toggle("active");
+      nav.classList.toggle("active"); // adiciona/remove a classe 'active' para mostrar/ocultar o menu
     });
   }
 
+  // =============================================
+  // FUNÇÕES PARA LIMPAR CAMPOS DOS FORMULÁRIOS
+  // =============================================
+
+  // Limpa todos os campos do formulário de registro (cadastro)
   function limparCamposRegistro() {
-    // Limpar campos principais
+    // Campos principais
     document.getElementById("regType").value = "";
     document.getElementById("regName").value = "";
     document.getElementById("regDocumentNumber").value = "";
@@ -22,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("regPassword").value = "";
     document.getElementById("regConfirmPassword").value = "";
 
-    // Limpar campos de endereço
+    // Campos de endereço
     document.getElementById("regCEP").value = "";
     document.getElementById("regStreet").value = "";
     document.getElementById("regNeighborhood").value = "";
@@ -30,26 +36,26 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("regState").value = "";
     document.getElementById("regNumber").value = "";
 
-    // Resetar o campo de tipo para mostrar o placeholder
+    // Resetar campo tipo para placeholder
     document.getElementById("regType").selectedIndex = 0;
 
-    // Esconder campos de ONG se estiverem visíveis
+    // Esconder campos específicos de ONG
     document.querySelector(".ngo-field").style.display = "none";
 
-    // Limpar mensagens de erro
+    // Limpar mensagens de erro visuais
     const errorMessages = document.querySelectorAll(".error-message");
     errorMessages.forEach((msg) => (msg.style.display = "none"));
 
-    // Limpar mensagem de senha não coincidente
+    // Esconder mensagem de senha não coincidente
     document.getElementById("passwordMismatch").style.display = "none";
   }
 
+  // Limpa os campos do formulário de login
   function limparCamposLogin() {
-    // Limpar campos do login
     document.getElementById("loginEmail").value = "";
     document.getElementById("loginPassword").value = "";
 
-    // Limpar mensagens de erro
+    // Limpar mensagens de erro do login
     const errorMessages = document.querySelectorAll(
       "#loginForm .error-message"
     );
@@ -57,21 +63,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // =============================================
-  // FORM VALIDATION AND MASKING
+  // VALIDAÇÃO E MÁSCARAS DOS FORMULÁRIOS
   // =============================================
   const setupFormValidation = () => {
     const regType = document.getElementById("regType");
     const documentHint = document.getElementById("documentHint");
 
     if (regType) {
-      // Show/hide NGO-specific fields
+      // Quando o tipo de usuário muda, mostra/esconde campos específicos e altera a dica do documento
       regType.addEventListener("change", function () {
         const type = this.value;
         const ngoFields = document.querySelector(".ngo-field");
 
         ngoFields.style.display = type === "ngo" ? "block" : "none";
 
-        // Update document field hint
         if (type === "business") {
           documentHint.textContent = "Insira o CPF (000.000.000-00)";
         } else if (type === "ngo") {
@@ -81,19 +86,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
-      // CPF/CNPJ input mask
+      // Máscara para CPF e CNPJ (formatação durante a digitação)
       document
         .getElementById("regDocumentNumber")
         .addEventListener("input", function (e) {
-          let value = e.target.value.replace(/\D/g, "");
+          let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é número
 
           if (value.length <= 11) {
-            // CPF format (000.000.000-00)
+            // CPF
             value = value.replace(/(\d{3})(\d)/, "$1.$2");
             value = value.replace(/(\d{3})(\d)/, "$1.$2");
             value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
           } else {
-            // CNPJ format (00.000.000/0000-00)
+            // CNPJ
             value = value.replace(/^(\d{2})(\d)/, "$1.$2");
             value = value.replace(/^(\d{2})\.(\d{3})(\d)/, "$1.$2.$3");
             value = value.replace(/\.(\d{3})(\d)/, ".$1/$2");
@@ -103,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
           e.target.value = value;
         });
 
-      // Phone input mask
+      // Máscara para telefone
       document
         .getElementById("regPhone")
         .addEventListener("input", function (e) {
@@ -119,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
           e.target.value = value;
         });
 
-      // Password confirmation validation
+      // Validação da confirmação de senha
       const passwordField = document.getElementById("regPassword");
       const confirmPasswordField =
         document.getElementById("regConfirmPassword");
@@ -138,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordField.addEventListener("input", validatePassword);
       confirmPasswordField.addEventListener("input", validatePassword);
 
-      // Document validation on form submit
+      // Validação do documento no envio do formulário
       document
         .getElementById("registerForm")
         .addEventListener("submit", function (e) {
@@ -163,8 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // DOCUMENT VALIDATION FUNCTIONS
+  // FUNÇÕES PARA VALIDAR CPF E CNPJ (OFFICIAL)
   // =============================================
+
   const validateDocument = (document) => {
     if (document.length === 11) {
       return validateCPF(document);
@@ -174,8 +180,9 @@ document.addEventListener("DOMContentLoaded", function () {
     return false;
   };
 
+  // Valida CPF pelo algoritmo oficial
   const validateCPF = (cpf) => {
-    if (/^(\d)\1{10}$/.test(cpf)) return false;
+    if (/^(\d)\1{10}$/.test(cpf)) return false; // Números repetidos inválidos
 
     let sum = 0;
     let remainder;
@@ -200,6 +207,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return true;
   };
 
+  // Valida CNPJ pelo algoritmo oficial
   const validateCNPJ = (cnpj) => {
     if (/^(\d)\1{13}$/.test(cnpj)) return false;
 
@@ -234,20 +242,28 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // MODAL MANAGEMENT
+  // GERENCIAMENTO DE MODAIS
   // =============================================
+
   const setupModals = () => {
+    // Botões que abrem modais
     const loginBtn = document.getElementById("loginBtn");
     const registerBtn = document.getElementById("registerBtn");
     const registerBtnHero = document.getElementById("registerBtnHero");
+
+    // Modais
     const loginModal = document.getElementById("loginModal");
     const registerModal = document.getElementById("registerModal");
+
+    // Botões para fechar modais
     const closeLoginModal = document.getElementById("closeLoginModal");
     const closeRegisterModal = document.getElementById("closeRegisterModal");
+
+    // Links para trocar modais (ex: ir para cadastro ao clicar em "não tem conta?")
     const showRegisterModal = document.getElementById("showRegisterModal");
     const showLoginModal = document.getElementById("showLoginModal");
 
-    // Open modals
+    // Abrir modal de login
     if (loginBtn) {
       loginBtn.addEventListener("click", function (e) {
         e.preventDefault();
@@ -255,6 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Abrir modal de registro
     if (registerBtn) {
       registerBtn.addEventListener("click", function (e) {
         e.preventDefault();
@@ -262,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Abrir modal de registro pelo botão no hero (área principal)
     if (registerBtnHero) {
       registerBtnHero.addEventListener("click", function (e) {
         e.preventDefault();
@@ -269,7 +287,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Close modals
+    // Fechar modal de login
     if (closeLoginModal) {
       closeLoginModal.addEventListener("click", function () {
         limparCamposLogin();
@@ -277,6 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Fechar modal de registro
     if (closeRegisterModal) {
       closeRegisterModal.addEventListener("click", function () {
         limparCamposRegistro();
@@ -284,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Switch between modals
+    // Trocar para modal de registro ao clicar no link
     if (showRegisterModal) {
       showRegisterModal.addEventListener("click", function (e) {
         e.preventDefault();
@@ -294,6 +313,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Trocar para modal de login ao clicar no link
     if (showLoginModal) {
       showLoginModal.addEventListener("click", function (e) {
         e.preventDefault();
@@ -303,7 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
-    // Close modals when clicking outside
+    // Fechar modais ao clicar fora deles
     window.addEventListener("click", function (e) {
       if (e.target === loginModal) {
         limparCamposLogin();
@@ -317,8 +337,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // FORM SUBMISSION HANDLERS
+  // MANIPULAÇÃO DE ENVIO DE FORMULÁRIOS DE CONTATO E NEWSLETTER
   // =============================================
+
   const setupFormSubmissions = () => {
     const contactForm = document.getElementById("contactForm");
     const newsletterForm = document.getElementById("newsletterForm");
@@ -341,21 +362,21 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // TOAST NOTIFICATION
+  // FUNÇÃO PARA MOSTRAR NOTIFICAÇÕES TOAST
   // =============================================
+
   function showToast(message, type = "success") {
     const toast = document.getElementById("toast");
     const toastMessage = document.getElementById("toastMessage");
     const toastIcon = toast.querySelector(".toast-content i");
 
-    // Limpa qualquer estado anterior
+    // Remove classes anteriores para evitar conflitos
     toast.classList.remove("success", "error", "info", "show");
     toastIcon.className = "";
 
-    // Define a mensagem
     toastMessage.textContent = message;
 
-    // Define o ícone e a classe de cor conforme o tipo
+    // Define ícones e cores conforme o tipo da mensagem
     if (type === "success") {
       toast.classList.add("success");
       toastIcon.classList.add("fas", "fa-check-circle");
@@ -367,23 +388,26 @@ document.addEventListener("DOMContentLoaded", function () {
       toastIcon.classList.add("fas", "fa-info-circle");
     }
 
-    // Faz o Toast aparecer
+    // Exibe o toast com um pequeno delay para animação
     setTimeout(() => {
       toast.classList.add("show");
-    }, 100); // Pequeno delay para garantir transição
+    }, 100);
 
-    // Remove o Toast após 3 segundos
+    // Esconde o toast após 2 segundos
     setTimeout(() => {
       toast.classList.remove("show");
     }, 2100);
   }
 
   // =============================================
-  // SMOOTH SCROLL
+  // ROLAGEM SUAVE PARA LINKS INTERNOS
   // =============================================
+
   const setupSmoothScroll = () => {
+    // Para todos links que começam com #
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
       anchor.addEventListener("click", function (e) {
+        // Ignora casos especiais para evitar conflito com modais
         if (
           this.getAttribute("href") !== "#" &&
           !this.getAttribute("id")?.includes("show") &&
@@ -397,6 +421,7 @@ document.addEventListener("DOMContentLoaded", function () {
           const targetElement = document.querySelector(targetId);
           if (!targetElement) return;
 
+          // Rola suavemente até o elemento (descontando header fixo)
           window.scrollTo({
             top: targetElement.offsetTop - 80,
             behavior: "smooth",
@@ -407,8 +432,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // HEADER SCROLL EFFECT
+  // EFEITO NO HEADER AO SCROLL
   // =============================================
+
   const setupHeaderScrollEffect = () => {
     const header = document.getElementById("header");
     if (header) {
@@ -425,8 +451,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // API INTEGRATION
+  // INTEGRAÇÃO COM A API (LOGIN E REGISTRO)
   // =============================================
+
   const API_BASE_URL = "https://localhost:7261/api";
 
   const setupApiIntegration = () => {
@@ -434,6 +461,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
     const cepField = document.getElementById("regCEP");
 
+    // Registro de usuário
     if (registerForm) {
       registerForm.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -478,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.body.classList.add("fade-out");
               setTimeout(() => {
                 window.location.href = "/index.html";
-              }, 600); // Espera a transição acabar (600ms)
+              }, 600); // Espera a transição (fade) terminar
             }, 2000);
           } else {
             showToast(`❌ Erro: ${result.message}`, "error");
@@ -490,6 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Login do usuário
     if (loginForm) {
       loginForm.addEventListener("submit", async function (e) {
         e.preventDefault();
@@ -518,7 +547,7 @@ document.addEventListener("DOMContentLoaded", function () {
               document.body.classList.add("fade-out");
               setTimeout(() => {
                 window.location.href = "/index.html";
-              }, 600); // Espera a transição acabar (600ms)
+              }, 600);
             }, 2000);
           } else {
             showToast(`❌ Erro: ${result.message}`, "error");
@@ -530,6 +559,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
     }
 
+    // Autocomplete de endereço pelo CEP usando API viacep
     if (cepField) {
       cepField.addEventListener("blur", async function () {
         const cepInput = this;
@@ -575,6 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
 
+      // Máscara do CEP (formato 00000-000)
       cepField.addEventListener("input", function () {
         this.value = this.value
           .replace(/\D/g, "")
@@ -584,8 +615,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // =============================================
-  // AUTHENTICATION CHECK
+  // VERIFICAÇÃO DE AUTENTICAÇÃO
   // =============================================
+
   const checkAuth = () => {
     const token = localStorage.getItem("jwtToken");
     const publicPages = ["/index.html", "/reset-password.html"];
@@ -594,11 +626,13 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.pathname.includes(page)
     );
 
+    // Se não autenticado e não estiver em página pública, redireciona para login
     if (!token && !isPublicPage) {
       window.location.href = "/index.html";
     }
   };
 
+  // Se estiver autenticado, mostra o perfil na interface
   const jwtToken = localStorage.getItem("jwtToken");
   const userData = localStorage.getItem("user");
 
@@ -607,8 +641,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // =============================================
-  // PASSWORD RECOVERY SUPPORT
+  // SUPORTE A RECUPERAÇÃO DE SENHA
   // =============================================
+
   const setupPasswordRecovery = () => {
     const forgotPasswordLink = document.getElementById("forgotPasswordLink");
     const forgotPasswordModal = document.getElementById("forgotPasswordModal");
@@ -678,14 +713,16 @@ document.addEventListener("DOMContentLoaded", function () {
       errorMessages.forEach((msg) => (msg.style.display = "none"));
     }
 
+    // Validação simples de e-mail com regex
     function validateEmail(email) {
-      // Regex simples só para validar formato
       const re = /\S+@\S+\.\S+/;
       return re.test(email);
     }
   };
 
-  //Nvoov
+  // =============================================
+  // CARREGAMENTO DE ESTATÍSTICAS
+  // =============================================
 
   async function loadStatsCounters() {
     const apiBaseUrl = "https://localhost:7261/api";
@@ -699,7 +736,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      // Faz requisição para o endpoint de usuários (ONGs e Estabelecimentos)
+      // Busca estatísticas dos usuários (ONGs, empresas)
       const userResponse = await fetch(`${apiBaseUrl}/auth/user-stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -707,7 +744,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
       const userStats = await userResponse.json();
 
-      // Faz requisição para o endpoint de doações
+      // Busca estatísticas das doações
       const donationResponse = await fetch(
         `${apiBaseUrl}/auth/donation-stats`,
         {
@@ -718,7 +755,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
       const donationStats = await donationResponse.json();
 
-      // Atualiza os contadores na página (só se os elementos existirem)
+      // Atualiza contadores na interface
       const businessEl = document.getElementById("businessCount");
       const donationEl = document.getElementById("donationCount");
       const ngoEl = document.getElementById("ngoCount");
@@ -732,12 +769,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Chama a função assim que a página carregar
+  // Carrega as estatísticas assim que a página termina de carregar
   document.addEventListener("DOMContentLoaded", loadStatsCounters);
 
   // =============================================
-  // INITIALIZATION
+  // INICIALIZAÇÃO DE TODAS AS FUNÇÕES
   // =============================================
+
   const init = () => {
     setupFormValidation();
     setupModals();
@@ -753,17 +791,21 @@ document.addEventListener("DOMContentLoaded", function () {
   init();
 });
 
+// =============================================
+// FUNÇÃO PARA EXIBIR PERFIL DO USUÁRIO NO HEADER
+// =============================================
+
 function showUserProfile(user) {
   const loginBtn = document.getElementById("loginBtn");
   const registerBtn = document.getElementById("registerBtn");
   const userProfile = document.getElementById("userProfile");
   const userName = document.getElementById("userName");
 
-  // Esconder botões de login/cadastro
+  // Esconde botões de login e cadastro
   if (loginBtn) loginBtn.parentElement.style.display = "none";
   if (registerBtn) registerBtn.parentElement.style.display = "none";
 
-  // Mostrar perfil do usuário
+  // Mostra perfil do usuário no header com nome
   if (userProfile) {
     userProfile.style.display = "flex";
     if (userName) {
@@ -772,7 +814,9 @@ function showUserProfile(user) {
   }
 }
 
-// Logout
+// =============================================
+// EVENTO DE LOGOUT
+// =============================================
 document.getElementById("logoutBtn")?.addEventListener("click", function (e) {
   e.preventDefault();
   localStorage.removeItem("jwtToken");

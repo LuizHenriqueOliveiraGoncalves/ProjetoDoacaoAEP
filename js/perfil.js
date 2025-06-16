@@ -1,4 +1,5 @@
-// perfil.js - Sistema completo de gerenciamento de perfil do usuário
+// perfil.js
+// Sistema completo para gerenciamento e edição do perfil do usuário
 
 const API_BASE_URL = "https://localhost:7261";
 
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   setupEventListeners();
 });
 
+// Verifica se o usuário está autenticado, redireciona se não
 function checkAuthentication() {
   const token = localStorage.getItem("jwtToken");
   const userData = localStorage.getItem("user");
@@ -18,6 +20,7 @@ function checkAuthentication() {
   return true;
 }
 
+// Carrega dados do perfil da API e atualiza UI
 async function loadProfileData() {
   try {
     const token = localStorage.getItem("jwtToken");
@@ -50,6 +53,7 @@ async function loadProfileData() {
   }
 }
 
+// Atualiza a interface do perfil com os dados do usuário
 function updateProfileUI(userData) {
   if (!userData) return;
   updateHeader(userData);
@@ -136,7 +140,7 @@ function updateStats(userData) {
   setElementText("member-since", memberSince);
 
   if (userType === "ngo") {
-    // Se for ONG, mostrar "Doações Reservadas"
+    // Se for ONG, mostra quantidade de doações reservadas
     fetchReservedDonationsCount()
       .then((count) => {
         setElementText("donations-count", count);
@@ -148,7 +152,7 @@ function updateStats(userData) {
         setElementText("donations-label", "Doações Reservadas");
       });
   } else {
-    // Se for doador, mostrar "Doações Realizadas"
+    // Se for doador, mostra doações realizadas
     fetchMyDonationsCount()
       .then((count) => {
         setElementText("donations-count", count);
@@ -219,6 +223,7 @@ function setupEventListeners() {
   }
 }
 
+// Alterna entre modo visualização e edição do perfil
 function toggleEditMode(editMode) {
   const viewMode = document.getElementById("profile-view-mode");
   const editForm = document.getElementById("profile-edit-form");
@@ -235,6 +240,7 @@ function toggleEditMode(editMode) {
   }
 }
 
+// Preenche o formulário de edição com dados atuais do usuário
 function populateEditForm() {
   const userData = JSON.parse(localStorage.getItem("user"));
   if (!userData) return;
@@ -257,10 +263,11 @@ function populateEditForm() {
     ngoTypeGroup.style.display = userData.type === "ngo" ? "block" : "none";
   }
 
-  // Adiciona autocomplete do CEP
+  // Configura auto-complete para o CEP
   setupCepAutoComplete();
 }
 
+// Auto-completa endereço com base no CEP usando API viacep
 function setupCepAutoComplete() {
   const cepField = document.getElementById("edit-cep");
   if (!cepField) return;
@@ -293,6 +300,7 @@ function setupCepAutoComplete() {
   });
 }
 
+// Salva alterações do perfil via PUT na API
 async function saveProfileChanges() {
   const token = localStorage.getItem("jwtToken");
 
@@ -337,12 +345,14 @@ async function saveProfileChanges() {
   }
 }
 
+// Trata situação de usuário não autorizado, limpa sessão e redireciona
 function handleUnauthorized() {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");
   window.location.href = "/index.html?session_expired=1";
 }
 
+// Funções auxiliares para facilitar alteração do texto e valor dos elementos
 function setElementText(elementId, text) {
   const element = document.getElementById(elementId);
   if (element) {
@@ -357,6 +367,7 @@ function setInputValue(elementId, value) {
   }
 }
 
+// Formata CPF/CNPJ para visualização amigável
 function formatDocument(doc) {
   if (!doc) return "";
   const cleaned = doc.replace(/\D/g, "");
@@ -371,6 +382,7 @@ function formatDocument(doc) {
   return doc;
 }
 
+// Formata data para formato brasileiro
 function formatDate(dateString) {
   if (!dateString) return "";
   try {
@@ -381,6 +393,7 @@ function formatDate(dateString) {
   }
 }
 
+// Obtém iniciais do nome do usuário para avatar
 function getInitials(name) {
   if (!name) return "US";
   return name
@@ -391,6 +404,7 @@ function getInitials(name) {
     .substring(0, 2);
 }
 
+// Função simples para mostrar toast (pode ser substituída por versão do common-ui.js)
 function showToast(message, type = "success") {
   const toast = document.createElement("div");
   toast.className = `toast ${type}`;
