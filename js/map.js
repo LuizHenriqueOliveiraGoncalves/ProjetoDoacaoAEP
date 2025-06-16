@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const map = L.map("map").setView([-23.304452, -51.169582], 13);
 
   // Adiciona camada base OpenStreetMap
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors"
   }).addTo(map);
 
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("jwtToken");
-  const API_BASE_URL = "https://localhost:7261/api";
+  const API_BASE_URL = "http://localhost:5098/api";
 
   let endpoint = "";
 

@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // INTEGRAÇÃO COM A API (LOGIN E REGISTRO)
   // =============================================
 
-  const API_BASE_URL = "https://localhost:7261/api";
+  const API_BASE_URL = "http://localhost:5098/api";
 
   const setupApiIntegration = () => {
     const registerForm = document.getElementById("registerForm");
@@ -725,7 +725,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================================
 
   async function loadStatsCounters() {
-    const apiBaseUrl = "https://localhost:7261/api";
+    const apiBaseUrl = "http://localhost:5098/api";
     const token = localStorage.getItem("jwtToken");
 
     if (!token) {

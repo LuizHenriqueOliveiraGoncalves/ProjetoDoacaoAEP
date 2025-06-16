@@ -1,7 +1,7 @@
 // perfil.js
 // Sistema completo para gerenciamento e edição do perfil do usuário
 
-const API_BASE_URL = "https://localhost:7261";
+const API_BASE_URL = "http://localhost:5098";
 
 document.addEventListener("DOMContentLoaded", function () {
   if (!checkAuthentication()) return;

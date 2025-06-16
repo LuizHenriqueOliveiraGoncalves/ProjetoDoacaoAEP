@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
       // Envia nova senha para API
-      const response = await fetch("https://localhost:7261/api/Auth/reset-password", {
+      const response = await fetch("http://localhost:5098/api/Auth/reset-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
