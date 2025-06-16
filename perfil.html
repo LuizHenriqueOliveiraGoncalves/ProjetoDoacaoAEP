@@ -1,0 +1,283 @@
+<!-- perfil.html -->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - Feed the Future BR</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/perfil.css">
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>Feed the Future BR</h1>
+            </div>
+            <nav id="nav">
+                <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu de navegação">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                <ul id="menu">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="doacoes.html">Doações</a></li>
+                    <li><a href="cadastrar-alimentos.html">Cadastrar Alimentos</a></li>
+                    <li class="user-profile">
+                        <div class="user-avatar">
+                            <div class="default-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                        </div>
+                        <span class="user-name" id="headerUserName">Usuário</span>
+                        <div class="user-dropdown">
+                            <a href="perfil.html" class="active"><i class="fas fa-user-circle"></i> Meu Perfil</a>
+                            <a href="meusPedidos.html"><i class="fas fa-box-open"></i> Meus Pedidos</a>
+                            
+                            <div class="divider"></div>
+                            <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</a>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Seção de Perfil -->
+    <section class="profile-section" style="padding: 150px 0 80px;">
+        <div class="container">
+            <div class="section-title">Meu Perfil</div>
+            
+            <div class="profile-container">
+                <!-- Sidebar de Navegação -->
+                <div class="profile-sidebar">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <div class="avatar-image">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h3 id="profile-name">Carregando...</h3>
+                            <p id="profile-type"></p>
+                        </div>
+                        <ul class="profile-menu">
+                            <li class="active"><a href="perfil.html"><i class="fas fa-user"></i> Informações Pessoais</a></li>                            
+                            <li><a href="meus-pedidos.html"><i class="fas fa-box-open"></i> Meus Pedidos</a></li>                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Conteúdo Principal do Perfil -->
+                <div class="profile-content">
+                    <!-- Card de Informações Pessoais -->
+                    <div class="profile-info-card">
+                        <div class="profile-info-header">
+                            <h3><i class="fas fa-user-circle"></i> Informações Pessoais</h3>
+                            <button class="btn btn-secondary" id="edit-profile-btn">Editar Perfil</button>
+                        </div>
+                        
+                        <div class="profile-info-body" id="profile-view-mode">
+                            <div class="info-group">
+                                <label>Tipo de Conta</label>
+                                <p id="account-type">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>Nome / Razão Social</label>
+                                <p id="full-name">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>CPF/CNPJ</label>
+                                <p id="document-number">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group" id="ngo-type-group">
+                                <label>Tipo de ONG</label>
+                                <p id="ngo-type">-</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>Email</label>
+                                <p id="email">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>Telefone</label>
+                                <p id="phone">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>Endereço</label>
+                                <p id="full-address">Carregando...</p>
+                            </div>
+                            
+                            <div class="info-group">
+                                <label>Data de Cadastro</label>
+                                <p id="created-at">Carregando...</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Formulário de Edição (inicialmente oculto) -->
+                        <form id="profile-edit-form" class="profile-info-body" style="display: none;">
+                            <div class="form-group">
+                                <label for="edit-type">Tipo de Conta</label>
+                                <select id="edit-type" name="type" disabled>
+                                    <option value="business">Doador/Receptor</option>
+                                    <option value="ngo">ONG</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-name">Nome / Razão Social</label>
+                                <input type="text" id="edit-name" name="name" required>
+                                <span class="error-message">Por favor, insira seu nome</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-document">CPF/CNPJ</label>
+                                <input type="text" id="edit-document" name="documentNumber" disabled>
+                            </div>
+                            
+                            <div class="form-group" id="edit-ngo-type-group" style="display: none;">
+                                <label for="edit-ngo-type">Tipo de ONG</label>
+                                <select id="edit-ngo-type" name="ngoType">
+                                    <option value="">Selecione...</option>
+                                    <option value="foodBank">Banco de Alimentos</option>
+                                    <option value="shelter">Abrigo</option>
+                                    <option value="communityKitchen">Cozinha Comunitária</option>
+                                    <option value="other">Outro</option>
+                                </select>
+                                <span class="error-message">Por favor, selecione um tipo</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-email">Email</label>
+                                <input type="email" id="edit-email" name="email" required>
+                                <span class="error-message">Por favor, insira um email válido</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-phone">Telefone</label>
+                                <input type="tel" id="edit-phone" name="phone" required>
+                                <span class="error-message">Por favor, insira um telefone válido</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-cep">CEP</label>
+                                <input type="text" id="edit-cep" name="cep" required>
+                                <span class="error-message">Por favor, insira um CEP válido</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-street">Rua</label>
+                                <input type="text" id="edit-street" name="street" required>
+                                <span class="error-message">Por favor, insira a rua</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-neighborhood">Bairro</label>
+                                <input type="text" id="edit-neighborhood" name="neighborhood" required>
+                                <span class="error-message">Por favor, insira o bairro</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-city">Cidade</label>
+                                <input type="text" id="edit-city" name="city" required>
+                                <span class="error-message">Por favor, insira a cidade</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-state">Estado</label>
+                                <input type="text" id="edit-state" name="state" maxlength="2" required>
+                                <span class="error-message">Por favor, insira o estado</span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="edit-number">Número</label>
+                                <input type="text" id="edit-number" name="number" required>
+                                <span class="error-message">Por favor, insira o número</span>
+                            </div>
+                            
+                            <div class="form-buttons">
+                                <button type="button" class="btn btn-secondary" id="cancel-edit-btn">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Card de Estatísticas (para ONGs ou Doadores) -->
+                    <div class="profile-stats-card">
+                        <div class="profile-info-header">
+                            <h3><i class="fas fa-chart-line"></i> Minhas Estatísticas</h3>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <i class="fas fa-box-open"></i>
+                                <h4 id="donations-count">0</h4>
+                                <p id="donations-label">Doações Realizadas</p>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-utensils"></i>
+                                <h4 id="food-amount">0 kg</h4>
+                                <p>Alimentos Doados</p>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-users"></i>
+                                <h4 id="people-helped">0</h4>
+                                <p>Pessoas Beneficiadas</p>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <h4 id="member-since">-</h4>
+                                <p>Membro Desde</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (igual ao da página principal) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2><i class="fas fa-seedling"></i> Feed the Future BR</h2>
+                    <p>
+                        Conectando estabelecimentos comerciais a ONGs para reduzir o
+                        desperdício de alimentos e ajudar comunidades vulneráveis.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h3>Links Rápidos</h3>
+                    <ul>
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="doacoes.html">Doações</a></li>
+                        <li><a href="cadastrar-alimentos.html">Cadastrar Alimentos</a></li>
+                        <li><a href="perfil.html">Meu Perfil</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Newsletter</h3>
+                    <p>
+                        Assine nossa newsletter para receber novidades e atualizações.
+                    </p>
+                    <form id="newsletterForm">
+                        <input type="email" placeholder="Seu email" required>
+                        <button type="submit" class="btn btn-primary">Assinar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Feed the Future BR. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+        <!-- Scripts -->
+    <script src="js/perfil.js"></script>
+</body>
+</html>

@@ -1,385 +1,313 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", async function () {
+  const API_BASE_URL = "https://localhost:7261/api";
+  const donationGrid = document.getElementById("donationGrid");
+  let currentDonations = [];
 
-    initializeSampleData();
+  async function refreshUserProfile() {
+    const token = localStorage.getItem("jwtToken");
+    if (!token) return;
 
-    function CriacaoDoacao(donationData) {
- 
-        const environmentalImpact = CalculoImpacto(donationData.quantity);
-        
+    try {
+      const response = await fetch(`${API_BASE_URL}/Auth/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-        let donations = JSON.parse(localStorage.getItem('donations')) || [];
-        donations.push(donationData);
-        localStorage.setItem('donations', JSON.stringify(donations));
-        
-
-        let impacts = JSON.parse(localStorage.getItem('environmentalImpacts')) || [];
-        impacts.push({
-            id: generateUUID(),
-            donationId: donationData.id,
-            co2Saved: environmentalImpact.co2Saved,
-            waterSaved: environmentalImpact.waterSaved,
-            createdAt: new Date()
-        });
-        localStorage.setItem('environmentalImpacts', JSON.stringify(impacts));
-        
-        return true;
+      if (response.ok) {
+        const user = await response.json();
+        localStorage.setItem("user", JSON.stringify(user));
+      } else {
+        console.warn("Não foi possível atualizar o perfil do usuário");
+      }
+    } catch (error) {
+      console.error("Erro ao atualizar perfil do usuário:", error);
     }
-    
-    function CalculoImpacto(quantity) {
-       
-        const co2PerKg = 2.5; 
-        const waterPerKg = 1000; 
-        
-        return {
-            co2Saved: quantity * co2PerKg,
-            waterSaved: quantity * waterPerKg
-        };
-    }
-    
-    function generateUUID() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            const r = Math.random() * 16 | 0;
-            const v = c === 'x' ? r : (r & 0x3 | 0x8);
-            return v.toString(16);
-        });
-    }
-    
-    
-    function initializeSampleData() {
-        if (!localStorage.getItem('donations')) {
-            const sampleBusinesses = [
-                {
-                    id: 'business-1',
-                    name: 'Restaurante Boa Mesa',
-                    email: 'contato@boamesa.com',
-                    phone: '11988887777',
-                    address: 'Av. Paulista, 1000, São Paulo - SP',
-                    type: 'business',
-                    documentNumber: '12345678000190',
-                    password: 'password123',
-                    createdAt: new Date()
-                },
-                {
-                    id: 'business-2',
-                    name: 'Supermercado Economia',
-                    email: 'contato@economia.com',
-                    phone: '11977776666',
-                    address: 'Rua Augusta, 500, São Paulo - SP',
-                    type: 'business',
-                    documentNumber: '98765432000190',
-                    password: 'password123',
-                    createdAt: new Date()
-                }
-            ];
-            
-            const sampleNGOs = [
-                {
-                    id: 'ngo-1',
-                    name: 'Ação Solidária',
-                    email: 'contato@acaosolidaria.org',
-                    phone: '11966665555',
-                    address: 'Rua Oscar Freire, 300, São Paulo - SP',
-                    type: 'ngo',
-                    documentNumber: '12345678000199',
-                    ngoType: 'foodBank',
-                    password: 'password123',
-                    createdAt: new Date()
-                }
-            ];
-            
-            const sampleDonations = [
-                {
-                    id: generateUUID(),
-                    businessId: 'business-1',
-                    title: 'Sobras do almoço',
-                    description: 'Arroz, feijão e legumes variados',
-                    category: 'prepared',
-                    quantity: 10,
-                    unit: 'kg',
-                    expirationDate: new Date(Date.now() + 2*24*60*60*1000), 
-                    pickupAddress: 'Av. Paulista, 1000, São Paulo - SP',
-                    pickupLatitude: -23.561778,
-                    pickupLongitude: -46.655600,
-                    deliveryType: 'pickup',
-                    status: 'available',
-                    createdAt: new Date()
-                },
-                {
-                    id: generateUUID(),
-                    businessId: 'business-2',
-                    title: 'Frutas e legumes',
-                    description: 'Banana, maçã, tomate e cenoura',
-                    category: 'produce',
-                    quantity: 15,
-                    unit: 'kg',
-                    expirationDate: new Date(Date.now() + 3*24*60*60*1000), 
-                    pickupAddress: 'Rua Augusta, 500, São Paulo - SP',
-                    pickupLatitude: -23.553430,
-                    pickupLongitude: -46.647053,
-                    deliveryType: 'pickup',
-                    status: 'available',
-                    createdAt: new Date()
-                }
-            ];
-            
-            // Calcula e salva o impacto ambiental para cada doação
-            const sampleImpacts = sampleDonations.map(donation => {
-                const impact = CalculoImpacto(donation.quantity);
-                return {
-                    id: generateUUID(),
-                    donationId: donation.id,
-                    co2Saved: impact.co2Saved,
-                    waterSaved: impact.waterSaved,
-                    createdAt: new Date()
-                };
-            });
-            
-           
-            const users = [...sampleBusinesses, ...sampleNGOs];
-            
-            localStorage.setItem('users', JSON.stringify(users));
-            localStorage.setItem('donations', JSON.stringify(sampleDonations));
-            localStorage.setItem('environmentalImpacts', JSON.stringify(sampleImpacts));
-            localStorage.setItem('reservations', JSON.stringify([]));
-            
-            console.log('Sample data initialized');
-        }
-    }
-});
+  }
 
-document.addEventListener('DOMContentLoaded', function() {
-    // Pega data doacao
-    const donations = JSON.parse(localStorage.getItem('donations')) || [];
-    const donationGrid = document.getElementById('donationGrid');
-    
+  async function fetchApi(endpoint, method = "GET", body = null) {
+    const token = localStorage.getItem("jwtToken");
 
-    function displayDonations() {
-      if (donations.length === 0) {
-        donationGrid.innerHTML = `
-          <div class="no-results">
-            <i class="fas fa-box-open" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-            <h3>Nenhuma doação disponível</h3>
-            <p>No momento não há doações disponíveis. Volte mais tarde.</p>
-          </div>
-        `;
+    if (!token) {
+      showToast("Sessão expirada. Por favor, faça login novamente.", "error");
+      redirectToLogin();
+      throw new Error("Token não encontrado");
+    }
+
+    const options = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    if (body) options.body = JSON.stringify(body);
+
+    try {
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, options);
+
+      if (response.status === 401) {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("user");
+        showToast("Sessão expirada. Por favor, faça login novamente.", "error");
+        redirectToLogin();
         return;
       }
-      
-      donationGrid.innerHTML = '';
-      
-      donations.forEach(donation => {
-        if (donation.status === 'available') {
-          // Format expiration date
-          const expirationDate = new Date(donation.expirationDate);
-          const formattedDate = expirationDate.toLocaleDateString('pt-BR');
-          
-          // Create donation card
-          const donationCard = document.createElement('div');
-          donationCard.className = 'donation-card';
-          donationCard.innerHTML = `
-            <div class="donation-image" style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
-              <i class="fas fa-utensils" style="font-size: 3rem; color: #4CAF50;"></i>
-            </div>
-            <div class="donation-content">
-              <h3 class="donation-title">${donation.title}</h3>
-              <div class="donation-meta">
-                <i class="fas fa-map-marker-alt"></i>
-                <span>${donation.pickupAddress.substring(0, 30)}...</span>
-              </div>
-              <div class="donation-meta">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Validade: ${formattedDate}</span>
-              </div>
-              <p class="donation-description">${donation.description}</p>
-              <div class="donation-footer">
-                <div class="donation-quantity">
-                  ${donation.quantity} ${donation.unit}
-                </div>
-                <button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>
-              </div>
-            </div>
-          `;
-          
-          donationGrid.appendChild(donationCard);
-        }
-      });
-      
- 
-      const reserveBtns = document.querySelectorAll('.reserve-btn');
-      reserveBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-          const donationId = this.getAttribute('data-id');
-          reserveDonation(donationId);
-        });
-      });
+
+      if (!response.ok)
+        throw new Error(`Erro na requisição: ${response.status}`);
+
+      // Se o status for 204 (No Content), retorne null
+      if (response.status === 204) {
+        return null;
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error("Erro na chamada API:", error);
+      showToast(error.message, "error");
+      throw error;
     }
+  }
+
+  function redirectToLogin() {
+    window.location.href = "/index.html";
+  }
+
+  async function loadDonations(sort = "date") {
+    try {
+      donationGrid.innerHTML =
+        '<div class="loading">Carregando doações...</div>';
+
+      await refreshUserProfile(); // ✅ Atualiza o usuário antes de carregar
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      let endpoint = "/Donation/MyDonations";
+
+      if (user && user.type?.toLowerCase() === "ngo") {
+        endpoint = "/Donation/all";
+      }
+
+      let donations = await fetchApi(`${endpoint}?sort=${sort}`);
+
+      if (user && user.type?.toLowerCase() === "ngo") {
+        donations = donations.filter((d) => d.isReserved === false);
+      }
+
+      currentDonations = donations;
+
+      displayDonations(donations);
+    } catch (error) {
+      handleLoadError(error);
+    }
+  }
+
+  function handleLoadError(error) {
+    console.error("Erro ao carregar doações:", error);
+    donationGrid.innerHTML = `
+      <div class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>Erro ao carregar doações. Tente recarregar a página.</p>
+      </div>
+    `;
+  }
+
+  function displayDonations(donations) {
+    if (donations.length === 0) {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const message =
+        user?.type?.toLowerCase() === "ngo"
+          ? "Nenhuma doação disponível no sistema"
+          : "Você ainda não cadastrou nenhuma doação";
+
+      donationGrid.innerHTML = `
+        <div class="no-results">
+          <i class="fas fa-box-open"></i>
+          <h3>${message}</h3>
+        </div>
+      `;
+      return;
+    }
+
+    donationGrid.innerHTML = "";
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    donations.forEach((donation) => {
+      const expirationDate = new Date(donation.expirationDate);
+      const formattedDate = expirationDate.toLocaleDateString("pt-BR");
+      const isOngUser = user?.type?.toLowerCase() === "ngo";
+      const isMyDonation = donation.creatorId === user?.id;
+      const isReserved = donation.isReserved === true;
+
+      const creatorAddress = donation.creatorStreet
+        ? `${donation.creatorStreet}, ${donation.creatorNumber || "S/N"} - ${
+            donation.creatorNeighborhood
+          }, ${donation.creatorCity}/${donation.creatorState}`
+        : "Endereço não informado";
+
+      const donationCard = document.createElement("div");
+      donationCard.className = `donation-card ${
+        isMyDonation ? "my-donation" : ""
+      }`;
+
+      donationCard.innerHTML = `
+  <div class="donation-content">
+    <h3 class="donation-title">${donation.title}</h3>
     
-    displayDonations();
-    
-    const searchBtn = document.getElementById('searchBtn');
-    const searchInput = document.getElementById('searchInput');
-    
-    searchBtn.addEventListener('click', function() {
-      const searchTerm = searchInput.value.toLowerCase();
+    <div class="donation-meta">
+      <i class="fas fa-tag"></i>
+      <span>${donation.category}</span>
+    </div>
+
+    <div class="donation-meta">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>${creatorAddress}</span>
+    </div>
+
+    <div class="donation-meta">
+      <i class="fas fa-calendar-alt"></i>
+      <span>Validade: ${formattedDate}</span>
+    </div>
+
+    <p class="donation-description">${donation.description}</p>
+
+    <div class="donation-footer">
+      <div class="donation-impact-line">
+        <div class="donation-quantity">${donation.quantity} ${
+        donation.unit
+      }</div>
+        <span title="CO2 Impact">🌱 ${donation.co2Impact || 0}kg CO2</span>
+        <span title="Water Impact">💧 ${donation.waterImpact || 0}L</span>
+      </div>
+
+      ${
+        isOngUser && !isMyDonation && !isReserved
+          ? `<button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>`
+          : ""
+      }
+      ${
+        isReserved && !isMyDonation
+          ? `<span class="donation-status">Reservada</span>`
+          : ""
+      }
+      ${
+        isMyDonation
+          ? `<button class="btn btn-danger delete-btn" data-id="${donation.id}">Excluir</button>`
+          : ""
+      }
+    </div>
+  </div>
+`;
+
+      donationGrid.appendChild(donationCard);
+    });
+
+    document.querySelectorAll(".reserve-btn").forEach((btn) => {
+      btn.addEventListener("click", () => reserveDonation(btn.dataset.id));
+    });
+
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
+      btn.addEventListener("click", () => deleteDonation(btn.dataset.id));
+    });
+  }
+
+  async function reserveDonation(donationId) {
+    try {
+      await fetchApi(`/Donation/${donationId}/reserve`, "PATCH");
+      showToast("Doação reservada com sucesso!");
+      loadDonations(document.getElementById("sort").value);
+    } catch (error) {
+      showToast("Erro ao reservar doação: " + error.message, "error");
+    }
+  }
+
+  async function deleteDonation(donationId) {
+    showConfirmToast(
+      "Tem certeza que deseja excluir esta doação?",
+      async () => {
+        try {
+          await fetchApi(`/Donation/${donationId}/creator`, "DELETE");
+          showToast("Doação excluída com sucesso!");
+          loadDonations(document.getElementById("sort").value);
+        } catch (error) {
+          showToast("Erro ao excluir doação: " + error.message, "error");
+        }
+      }
+    );
+  }
+
+  function showToast(message, type = "success") {
+    const toast = document.getElementById("toast");
+    const toastMessage = document.getElementById("toastMessage");
+
+    toast.className = `toast show ${type}`;
+    toastMessage.textContent = message;
+
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+
+  function filterDonations(searchTerm) {
+    if (!searchTerm) {
+      return displayDonations(currentDonations);
+    }
+
+    const filtered = currentDonations.filter(
+      (donation) =>
+        donation.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        donation.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        donation.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    displayDonations(filtered);
+  }
+
+  function showConfirmToast(message, onConfirm) {
+    const toast = document.getElementById("confirmToast");
+    const toastMessage = document.getElementById("confirmMessage");
+    const confirmYes = document.getElementById("confirmYes");
+    const confirmNo = document.getElementById("confirmNo");
+
+    toastMessage.textContent = message;
+    toast.classList.add("show");
+
+    // Remove qualquer listener antigo
+    confirmYes.onclick = null;
+    confirmNo.onclick = null;
+
+    confirmYes.onclick = () => {
+      toast.classList.remove("show");
+      onConfirm();
+    };
+
+    confirmNo.onclick = () => {
+      toast.classList.remove("show");
+    };
+  }
+
+  async function sortDonations(sortBy) {
+    await loadDonations(sortBy);
+  }
+
+  document.getElementById("searchBtn").addEventListener("click", () => {
+    const searchTerm = document.getElementById("searchInput").value;
+    filterDonations(searchTerm);
+  });
+
+  document.getElementById("searchInput").addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
+      const searchTerm = document.getElementById("searchInput").value;
       filterDonations(searchTerm);
-    });
-    
-    searchInput.addEventListener('keyup', function(event) {
-      if (event.key === 'Enter') {
-        const searchTerm = searchInput.value.toLowerCase();
-        filterDonations(searchTerm);
-      }
-    });
-    
-    function filterDonations(searchTerm) {
-      const filteredDonations = donations.filter(donation => {
-        return donation.status === 'available' && (
-          donation.title.toLowerCase().includes(searchTerm) ||
-          donation.description.toLowerCase().includes(searchTerm) ||
-          donation.category.toLowerCase().includes(searchTerm)
-        );
-      });
-      
-      updateDonationDisplay(filteredDonations);
-    }
-    
-    function updateDonationDisplay(filteredDonations) {
-      if (filteredDonations.length === 0) {
-        donationGrid.innerHTML = `
-          <div class="no-results">
-            <i class="fas fa-search" style="font-size: 3rem; color: #ccc; margin-bottom: 1rem;"></i>
-            <h3>Nenhuma doação encontrada</h3>
-            <p>Tente outra busca ou verifique mais tarde.</p>
-          </div>
-        `;
-        return;
-      }
-      
-      donationGrid.innerHTML = '';
-      
-      filteredDonations.forEach(donation => {
-
-        const expirationDate = new Date(donation.expirationDate);
-        const formattedDate = expirationDate.toLocaleDateString('pt-BR');
-        
-
-        const donationCard = document.createElement('div');
-        donationCard.className = 'donation-card';
-        donationCard.innerHTML = `
-          <div class="donation-image" style="display: flex; justify-content: center; align-items: center; background-color: #f5f5f5;">
-            <i class="fas fa-utensils" style="font-size: 3rem; color: #4CAF50;"></i>
-          </div>
-          <div class="donation-content">
-            <h3 class="donation-title">${donation.title}</h3>
-            <div class="donation-meta">
-              <i class="fas fa-map-marker-alt"></i>
-              <span>${donation.pickupAddress.substring(0, 30)}...</span>
-            </div>
-            <div class="donation-meta">
-              <i class="fas fa-calendar-alt"></i>
-              <span>Validade: ${formattedDate}</span>
-            </div>
-            <p class="donation-description">${donation.description}</p>
-            <div class="donation-footer">
-              <div class="donation-quantity">
-                ${donation.quantity} ${donation.unit}
-              </div>
-              <button class="btn btn-primary reserve-btn" data-id="${donation.id}">Reservar</button>
-            </div>
-          </div>
-        `;
-        
-        donationGrid.appendChild(donationCard);
-      });
-    }
-    
- 
-    const sortSelect = document.getElementById('sort');
-    sortSelect.addEventListener('change', function() {
-      const sortValue = this.value;
-      sortDonations(sortValue);
-    });
-    
-    function sortDonations(sortBy) {
-      let sortedDonations = [...donations].filter(d => d.status === 'available');
-      
-      switch(sortBy) {
-        case 'date':
-          sortedDonations.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-          break;
-        case 'expiration':
-          sortedDonations.sort((a, b) => new Date(a.expirationDate) - new Date(b.expirationDate));
-          break;
-        case 'distance':
-         
-          break;
-      }
-      
-      updateDonationDisplay(sortedDonations);
     }
   });
-  
 
-  function reserveDonation(donationId) {
-    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
-    if (!currentUser) {
-      document.getElementById('loginModal').style.display = 'block';
-      document.getElementById('toastMessage').textContent = 'Você precisa estar logado para reservar uma doação.';
-      document.getElementById('toast').classList.add('show');
-      setTimeout(() => {
-        document.getElementById('toast').classList.remove('show');
-      }, 3000);
-      return;
-    }
-    
-    if (currentUser.type !== 'ngo') {
-      document.getElementById('toastMessage').textContent = 'Apenas ONGs podem reservar doações.';
-      document.getElementById('toast').classList.add('show');
-      setTimeout(() => {
-        document.getElementById('toast').classList.remove('show');
-      }, 3000);
-      return;
-    }
-    
-    const donations = JSON.parse(localStorage.getItem('donations')) || [];
-    const donationIndex = donations.findIndex(d => d.id === donationId);
-    
-    if (donationIndex >= 0) {
-      donations[donationIndex].status = 'reserved';
-      
-   
-      const reservation = {
-        id: generateUUID(),
-        donationId: donationId,
-        ngoId: currentUser.id,
-        scheduledDate: new Date(Date.now() + 24*60*60*1000), 
-        status: 'scheduled',
-        createdAt: new Date()
-      };
-      
+  document.getElementById("sort").addEventListener("change", (event) => {
+    sortDonations(event.target.value);
+  });
 
-      const reservations = JSON.parse(localStorage.getItem('reservations')) || [];
-      reservations.push(reservation);
-      
-    
-      localStorage.setItem('donations', JSON.stringify(donations));
-      localStorage.setItem('reservations', JSON.stringify(reservations));
-      
-      document.getElementById('toastMessage').textContent = 'Doação reservada com sucesso! A coleta foi agendada para amanhã.';
-      document.getElementById('toast').classList.add('show');
-      setTimeout(() => {
-        document.getElementById('toast').classList.remove('show');
-        
-        window.location.reload();
-      }, 3000);
-    }
-  }
-  
-  function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        const r = Math.random() * 16 | 0;
-        const v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
-  }
+  await loadDonations();
+
+  setInterval(() => {
+    loadDonations(document.getElementById("sort").value);
+  }, 120000);
+});

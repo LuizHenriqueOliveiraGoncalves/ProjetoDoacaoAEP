@@ -5,13 +5,26 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastrar Alimentos | Feed the Future BR</title>
-    <meta name="description" content="Cadastre alimentos para doação na plataforma Feed the Future BR." />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/cadastroDoacao.css">
+    <meta
+      name="description"
+      content="Cadastre alimentos para doação na plataforma Feed the Future BR."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/cadastroDoacao.css" />
+    <link rel="stylesheet" href="css/perfil.css" />
   </head>
   <body>
     <!-- Cabeçalho -->
@@ -30,10 +43,37 @@
             <li><a href="index.html#como-funciona">Como Funciona</a></li>
             <li><a href="index.html#impacto">Impacto</a></li>
             <li><a href="doacoes.html">Doações</a></li>
-            <li><a href="cadastrar-alimentos.html" class="active">Cadastrar Alimentos</a></li>
-            <li><a href="index.html#contato">Contato</a></li>
+            <li>
+              <a href="cadastrar-alimentos.html" class="active"
+                >Cadastrar Alimentos</a
+              >
+            </li>
             <li><a href="#" class="btn-login" id="loginBtn">Login</a></li>
-            <li><a href="#" class="btn-register" id="registerBtn">Cadastre-se</a></li>
+            <li>
+              <a href="#" class="btn-register" id="registerBtn">Cadastre-se</a>
+            </li>
+            <li class="user-profile" id="userProfile" style="display: none">
+              <div class="user-avatar">
+                <div class="default-avatar">
+                  <i class="fas fa-user"></i>
+                </div>
+                <!-- Se quiser usar imagem do usuário: -->
+                <!-- <img src="caminho/para/foto.jpg" alt="Foto do usuário"> -->
+              </div>
+              <span class="user-name" id="userName">Usuário</span>
+              <div class="user-dropdown">
+                <a href="perfil.html"
+                  ><i class="fas fa-user-circle"></i> Meu Perfil</a
+                >
+                <a href="meusPedidos.html"
+                  ><i class="fas fa-box-open"></i> Meus Pedidos</a
+                >
+                <div class="divider"></div>
+                <a href="#" id="logoutBtn"
+                  ><i class="fas fa-sign-out-alt"></i> Sair</a
+                >
+              </div>
+            </li>
           </ul>
         </nav>
       </div>
@@ -43,16 +83,25 @@
     <section class="form-section">
       <div class="container">
         <h2 class="section-title">Cadastrar Alimentos para Doação</h2>
-        <p class="section-description">Preencha o formulário abaixo para cadastrar os alimentos que você deseja doar.</p>
-        
+        <p class="section-description">
+          Preencha o formulário abaixo para cadastrar os alimentos que você
+          deseja doar.
+        </p>
+
         <div class="form-container">
           <form id="donationForm">
             <div class="form-grid">
               <div class="form-group">
                 <label for="title">Título da Doação*</label>
-                <input type="text" id="title" name="title" required placeholder="Ex: Frutas e vegetais frescos">
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  required
+                  placeholder="Ex: Frutas e vegetais frescos"
+                />
               </div>
-              
+
               <div class="form-group">
                 <label for="category">Categoria*</label>
                 <select id="category" name="category" required>
@@ -67,17 +116,29 @@
                   <option value="other">Outros</option>
                 </select>
               </div>
-              
+
               <div class="form-group form-full-width">
                 <label for="description">Descrição*</label>
-                <textarea id="description" name="description" required placeholder="Descreva em detalhes os alimentos que você está doando..."></textarea>
+                <textarea
+                  id="description"
+                  name="description"
+                  required
+                  placeholder="Descreva em detalhes os alimentos que você está doando..."
+                ></textarea>
               </div>
-              
+
               <div class="form-group">
                 <label for="quantity">Quantidade*</label>
-                <input type="number" id="quantity" name="quantity" min="0.1" step="0.1" required>
+                <input
+                  type="number"
+                  id="quantity"
+                  name="quantity"
+                  min="0.1"
+                  step="0.1"
+                  required
+                />
               </div>
-              
+
               <div class="form-group">
                 <label for="unit">Unidade*</label>
                 <select id="unit" name="unit" required>
@@ -91,34 +152,36 @@
                   <option value="portions">Porções</option>
                 </select>
               </div>
-              
+
               <div class="form-group">
                 <label for="expirationDate">Data de Validade*</label>
-                <input type="date" id="expirationDate" name="expirationDate" required>
+                <input
+                  type="date"
+                  id="expirationDate"
+                  name="expirationDate"
+                  required
+                />
               </div>
-              
-              <div class="form-group">
-                <label for="deliveryType">Tipo de Entrega*</label>
-                <select id="deliveryType" name="deliveryType" required>
-                  <option value="">Selecione...</option>
-                  <option value="pickup">Retirada no Local</option>
-                  <option value="delivery">Entrega</option>
-                </select>
-              </div>
-              
-              <div class="form-group form-full-width">
-                <label for="pickupAddress">Endereço para Entrega*</label>
-                <input type="text" id="pickupAddress" name="pickupAddress"  placeholder="Endereço completo">
-              </div>
-              
-              <input type="hidden" id="pickupLatitude" name="pickupLatitude" value="-23.550520">
-              <input type="hidden" id="pickupLongitude" name="pickupLongitude" value="-46.633308">
+
+              <input
+                type="hidden"
+                id="pickupLatitude"
+                name="pickupLatitude"
+                value=""
+              />
+              <input
+                type="hidden"
+                id="pickupLongitude"
+                name="pickupLongitude"
+                value=""
+              />
             </div>
-            
-            <div class="donation-preview" id="donationPreview" style="display: none;">
-              <h3>Pré-visualização da Doação</h3>
-              <div class="preview-content"></div>
-              
+
+            <div
+              class="donation-preview"
+              id="donationPreview"
+              style="display: none"
+            >
               <div class="impact-info">
                 <div class="impact-title">Impacto Ambiental Estimado:</div>
                 <div class="impact-stats">
@@ -133,10 +196,11 @@
                 </div>
               </div>
             </div>
-            
-            <div class="form-group" style="margin-top: 1.5rem;">
-              <button type="submit" class="btn btn-primary">Cadastrar Doação</button>
-              <button type="button" class="btn btn-secondary" id="previewBtn">Pré-visualizar</button>
+
+            <div class="form-group" style="margin-top: 1.5rem">
+              <button type="submit" class="btn btn-primary">
+                Cadastrar Doação
+              </button>            
             </div>
           </form>
         </div>
@@ -149,7 +213,10 @@
         <div class="footer-content">
           <div class="footer-logo">
             <h2><i class="fas fa-seedling"></i> Feed the Future BR</h2>
-            <p>Conectando estabelecimentos comerciais a ONGs para reduzir o desperdício de alimentos e ajudar comunidades vulneráveis.</p>
+            <p>
+              Conectando estabelecimentos comerciais a ONGs para reduzir o
+              desperdício de alimentos e ajudar comunidades vulneráveis.
+            </p>
           </div>
           <div class="footer-links">
             <h3>Links Rápidos</h3>
@@ -158,7 +225,9 @@
               <li><a href="index.html#como-funciona">Como Funciona</a></li>
               <li><a href="index.html#impacto">Impacto</a></li>
               <li><a href="doacoes.html">Doações</a></li>
-              <li><a href="cadastrar-alimentos.html">Cadastrar Alimentos</a></li>
+              <li>
+                <a href="cadastrar-alimentos.html">Cadastrar Alimentos</a>
+              </li>
               <li><a href="index.html#contato">Contato</a></li>
             </ul>
           </div>
@@ -171,9 +240,11 @@
           </div>
           <div class="footer-newsletter">
             <h3>Newsletter</h3>
-            <p>Assine nossa newsletter para receber novidades e atualizações.</p>
+            <p>
+              Assine nossa newsletter para receber novidades e atualizações.
+            </p>
             <form id="newsletterForm">
-              <input type="email" placeholder="Seu email" required>
+              <input type="email" placeholder="Seu email" required />
               <button type="submit" class="btn btn-primary">Assinar</button>
             </form>
           </div>
@@ -192,18 +263,26 @@
         <form id="loginForm">
           <div class="form-group">
             <label for="loginEmail">Email</label>
-            <input type="email" id="loginEmail" name="email" required>
+            <input type="email" id="loginEmail" name="email" required />
             <span class="error-message">Por favor, insira um email válido</span>
           </div>
           <div class="form-group">
             <label for="loginPassword">Senha</label>
-            <input type="password" id="loginPassword" name="password" required>
+            <input
+              type="password"
+              id="loginPassword"
+              name="password"
+              required
+            />
             <span class="error-message">Por favor, insira sua senha</span>
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
         </form>
         <div class="form-link">
-          <p>Não tem uma conta? <a href="#" id="showRegisterModal">Cadastre-se</a></p>
+          <p>
+            Não tem uma conta?
+            <a href="#" id="showRegisterModal">Cadastre-se</a>
+          </p>
         </div>
       </div>
     </div>
@@ -223,23 +302,30 @@
             </select>
             <span class="error-message">Por favor, selecione um tipo</span>
           </div>
-          
+
           <div class="form-group">
             <label for="regName">Nome / Razão Social</label>
-            <input type="text" id="regName" name="name" required>
+            <input type="text" id="regName" name="name" required />
             <span class="error-message">Por favor, insira seu nome</span>
           </div>
-          
+
           <div class="form-group">
             <label for="regDocumentNumber">CPF/CNPJ</label>
-            <input type="text" id="regDocumentNumber" name="documentNumber" 
-                   pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})" 
-                   title="Digite um CPF (000.000.000-00) ou CNPJ (00.000.000/0000-00) válido" required>
-            <span class="error-message">Por favor, insira um CPF ou CNPJ válido</span>
+            <input
+              type="text"
+              id="regDocumentNumber"
+              name="documentNumber"
+              pattern="(\d{3}\.?\d{3}\.?\d{3}-?\d{2})|(\d{2}\.?\d{3}\.?\d{3}/?\d{4}-?\d{2})"
+              title="Digite um CPF (000.000.000-00) ou CNPJ (00.000.000/0000-00) válido"
+              required
+            />
+            <span class="error-message"
+              >Por favor, insira um CPF ou CNPJ válido</span
+            >
             <span class="document-hint" id="documentHint"></span>
           </div>
-          
-          <div class="form-group ngo-field" style="display: none;">
+
+          <div class="form-group ngo-field" style="display: none">
             <label for="ngoType">Tipo de ONG</label>
             <select id="ngoType" name="ngoType" required>
               <option value="">Selecione...</option>
@@ -250,63 +336,86 @@
             </select>
             <span class="error-message">Por favor, selecione um tipo</span>
           </div>
-          
+
           <div class="form-group">
             <label for="regEmail">Email</label>
-            <input type="email" id="regEmail" name="email" required>
+            <input type="email" id="regEmail" name="email" required />
             <span class="error-message">Por favor, insira um email válido</span>
           </div>
-          
+
           <div class="form-group">
             <label for="regPhone">Telefone</label>
-            <input type="tel" id="regPhone" name="phone" 
-                   pattern="\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}" 
-                   title="Digite um telefone válido (DDD) + número" required>
-            <span class="error-message">Por favor, insira um telefone válido</span>
+            <input
+              type="tel"
+              id="regPhone"
+              name="phone"
+              pattern="\(?\d{2}\)?[\s-]?\d{4,5}[\s-]?\d{4}"
+              title="Digite um telefone válido (DDD) + número"
+              required
+            />
+            <span class="error-message"
+              >Por favor, insira um telefone válido</span
+            >
           </div>
-          
+
           <div class="form-group">
             <label for="regAddress">Endereço</label>
-            <input type="text" id="regAddress" name="address" required>
+            <input type="text" id="regAddress" name="address" required />
             <span class="error-message">Por favor, insira seu endereço</span>
           </div>
-          
+
           <div class="form-group">
             <label for="regPassword">Senha</label>
-            <input type="password" id="regPassword" name="password" 
-                   minlength="8" 
-                   pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" 
-                   title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número" 
-                   required>
-            <span class="error-message">A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas e números</span>
+            <input
+              type="password"
+              id="regPassword"
+              name="password"
+              minlength="8"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+              title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número"
+              required
+            />
+            <span class="error-message"
+              >A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas
+              e números</span
+            >
           </div>
-          
+
           <div class="form-group">
             <label for="regConfirmPassword">Confirmar Senha</label>
-            <input type="password" id="regConfirmPassword" name="confirmPassword" required>
-            <span class="password-mismatch" id="passwordMismatch">As senhas não coincidem</span>
+            <input
+              type="password"
+              id="regConfirmPassword"
+              name="confirmPassword"
+              required
+            />
+            <span class="password-mismatch" id="passwordMismatch"
+              >As senhas não coincidem</span
+            >
           </div>
-          
+
           <button type="submit" class="btn btn-primary">Cadastrar</button>
         </form>
         <div class="form-link">
-          <p>Já tem uma conta? <a href="#" id="showLoginModal">Faça login</a></p>
+          <p>
+            Já tem uma conta? <a href="#" id="showLoginModal">Faça login</a>
+          </p>
         </div>
       </div>
     </div>
 
-   <!-- Notificação de Operação -->
+    <!-- Notificação de Operação -->
     <div id="toast" class="toast">
       <div class="toast-content">
         <i class="fas fa-check-circle"></i>
-        <div class="toast-message" id="toastMessage">Operação realizada com sucesso!</div>
+        <div class="toast-message" id="toastMessage">
+          Operação realizada com sucesso!
+        </div>
       </div>
       <div class="toast-progress"></div>
     </div>
 
     <script src="js/script.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/donations.js"></script>
     <script src="js/cadastroAlimento.js"></script>
   </body>
 </html>
