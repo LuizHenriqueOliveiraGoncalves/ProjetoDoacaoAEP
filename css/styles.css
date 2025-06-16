@@ -985,3 +985,21 @@ select:invalid ~ .error-message {
   opacity: 0;
   transition: opacity 0.8s ease-out;
 }
+
+
+  .password-wrapper {
+    position: relative;
+  }
+
+  .password-wrapper input {
+    padding-right: 30px;
+  }
+
+  .toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+  }

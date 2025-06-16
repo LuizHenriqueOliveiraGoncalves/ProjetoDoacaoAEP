@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", function () {
+  
+  // =============================================
+  // FUNÇÃO PARA MOSTRAR/OCULTAR SENHAS
+  // =============================================
+  window.togglePassword = function (inputId, icon) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+
+    if (input.type === "password") {
+      input.type = "text";
+      icon.textContent = "🙈";
+    } else {
+      input.type = "password";
+      icon.textContent = "👁️";
+    }
+  };
+
   // =============================================
   // MENU TOGGLE FUNCTIONALITY
   // =============================================

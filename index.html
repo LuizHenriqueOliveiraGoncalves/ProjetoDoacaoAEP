@@ -240,8 +240,6 @@
       </div>
     </section>
 
-    
-
     <!-- Footer -->
     <footer>
       <div class="container">
@@ -279,7 +277,7 @@
               Assine nossa newsletter para receber novidades e atualizações.
             </p>
             <form id="newsletterForm">
-              <input type="email" placeholder="Seu email"  />
+              <input type="email" placeholder="Seu email" />
               <span class="error-message"
                 >Por favor, insira um email válido</span
               >
@@ -306,12 +304,19 @@
           </div>
           <div class="form-group">
             <label for="loginPassword">Senha</label>
-            <input
-              type="password"
-              id="loginPassword"
-              name="password"
-              required
-            />
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="loginPassword"
+                name="password"
+                required
+              />
+              <span
+                class="toggle-password"
+                onclick="togglePassword('loginPassword', this)"
+                >👁️</span
+              >
+            </div>
             <span class="error-message">Por favor, insira sua senha</span>
           </div>
           <button type="submit" class="btn btn-primary">Entrar</button>
@@ -339,7 +344,7 @@
             <label for="regType">Tipo de Cadastro</label>
             <select id="regType" name="type" required>
               <option value="">Selecione...</option>
-              <option value="business">Doador/Receptor</option>
+              <option value="business">Doador</option>
               <option value="ngo">ONG</option>
             </select>
             <span class="error-message">Por favor, selecione um tipo</span>
@@ -455,15 +460,22 @@
 
           <div class="form-group">
             <label for="regPassword">Senha</label>
-            <input
-              type="password"
-              id="regPassword"
-              name="password"
-              minlength="8"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
-              title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número"
-              required
-            />
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="regPassword"
+                name="password"
+                minlength="8"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+                title="A senha deve ter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula e um número"
+                required
+              />
+              <span
+                class="toggle-password"
+                onclick="togglePassword('regPassword', this)"
+                >👁️</span
+              >
+            </div>
             <span class="error-message"
               >A senha deve ter 8+ caracteres, incluindo maiúsculas, minúsculas
               e números</span
@@ -472,12 +484,19 @@
 
           <div class="form-group">
             <label for="regConfirmPassword">Confirmar Senha</label>
-            <input
-              type="password"
-              id="regConfirmPassword"
-              name="confirmPassword"
-              required
-            />
+            <div class="password-wrapper">
+              <input
+                type="password"
+                id="regConfirmPassword"
+                name="confirmPassword"
+                required
+              />
+              <span
+                class="toggle-password"
+                onclick="togglePassword('regConfirmPassword', this)"
+                >👁️</span
+              >
+            </div>
             <span class="password-mismatch" id="passwordMismatch"
               >As senhas não coincidem</span
             >
