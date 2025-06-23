@@ -2,7 +2,7 @@
 // Gerencia a listagem, filtro, reserva e exclusão de doações
 
 document.addEventListener("DOMContentLoaded", async function () {
-      const API_BASE_URL = "http://localhost:5098/api";
+      const API_BASE_URL = "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api";
   const donationGrid = document.getElementById("donationGrid");
   let currentDonations = [];
 

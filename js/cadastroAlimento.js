@@ -36,7 +36,7 @@ document
 
     try {
       // Envia os dados para a API via POST
-      const response = await fetch("http://localhost:5098/api/donation", {
+      const response = await fetch("https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api/donation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

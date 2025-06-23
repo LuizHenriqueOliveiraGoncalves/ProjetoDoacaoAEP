@@ -24,7 +24,7 @@ async function verificarTipoUsuarioAntesDeCarregar() {
   const token = localStorage.getItem("jwtToken");
 
   try {
-    const response = await fetch("http://localhost:5098/api/Auth/profile", {
+    const response = await fetch("https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api/Auth/profile", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -53,7 +53,7 @@ async function carregarDoacoesReservadas() {
 
   try {
     const response = await fetch(
-      "http://localhost:5098/api/Donation/reserved-by-me",
+      "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api/Donation/reserved-by-me",
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -177,7 +177,7 @@ document.addEventListener("click", async function (e) {
       async () => {
         try {
           const response = await fetch(
-            `http://localhost:5098/api/donation/${donationId}`,
+            `https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api/donation/${donationId}`,
             {
               method: "DELETE",
               headers: {

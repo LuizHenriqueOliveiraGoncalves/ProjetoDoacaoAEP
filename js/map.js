@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("jwtToken");
-  const API_BASE_URL = "http://localhost:5098/api";
+  const API_BASE_URL = "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api";
 
   let endpoint = "";
 

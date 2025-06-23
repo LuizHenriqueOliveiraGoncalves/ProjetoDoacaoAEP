@@ -471,7 +471,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // INTEGRAÇÃO COM A API (LOGIN E REGISTRO)
   // =============================================
 
-  const API_BASE_URL = "http://localhost:5098/api";
+  const API_BASE_URL = "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api";
 
   const setupApiIntegration = () => {
     const registerForm = document.getElementById("registerForm");
@@ -742,7 +742,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // =============================================
 
   async function loadStatsCounters() {
-    const apiBaseUrl = "http://localhost:5098/api";
+    const apiBaseUrl = "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net/api";
     const token = localStorage.getItem("jwtToken");
 
     if (!token) {

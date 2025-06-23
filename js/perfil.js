@@ -1,7 +1,7 @@
 // perfil.js
 // Sistema completo para gerenciamento e edição do perfil do usuário
 
-const API_BASE_URL = "http://localhost:5098";
+const API_BASE_URL = "https://feedthefuturebr-apawdadbdxg7enay.brazilsouth-01.azurewebsites.net";
 
 document.addEventListener("DOMContentLoaded", function () {
   if (!checkAuthentication()) return;
